@@ -2,7 +2,7 @@
 
 本项目来自配套材料 `lab1(1).zip`，使用 Windows VS Code + WSL2 Ubuntu 编译运行。
 
-2026-10-08 已验证：编译成功，QEMU 能输出 `(THU.CST) os is loading ...`，GDB 能命中 `kern_init` 硬件断点。AI 的完整验证需要先在 Cline 中填写你自己的 API Key。
+2026-10-08 已验证：编译成功，QEMU 能输出 `(THU.CST) os is loading ...`，GDB 能命中 `kern_init` 硬件断点。代码已推送到 GitHub。AI 的完整验证需要先在 Cline 中登录 ChatGPT Plus 或配置模型 API。
 
 ## 打开项目
 
@@ -34,7 +34,21 @@ QEMU 退出：按 `Ctrl+A`，松开后按 `X`。不要将这些 Linux 编译命�
 
 调试时先启动 `uCore: debug server lab1`，然后在另一个终端运行 `uCore: GDB lab1`。默认 GDB 服务监听本机端口 1234。
 
-## Cline + DeepSeek
+## Cline + ChatGPT Plus（当前选用）
+
+本机安装的 Cline 4.1.23 包含 ChatGPT 订阅登录功能。
+
+1. 打开 WSL 工作区的 Cline 面板，进入设置。
+2. API Provider 选择 `OpenAI ChatGPT Subscription`（内部提供方为 `openai-codex`）。
+3. 点击 `Sign in to OpenAI Codex`，按插件提示完成浏览器登录或设备码授权，登录已有 Plus 账号。
+4. 从提供方支持的模型列表中选择模型；若 Plan 和 Act 分别设置，分别确认使用相同提供方。
+5. 发送下方验证提示词，实际确认它能读取当前项目。
+
+这条路径不需要填写 OpenAI API Key。使用的额度受 ChatGPT 套餐限制；如果选择 API Key 路径，API 调用按用量单独计费，不抵扣 Plus 套餐。
+
+若插件的订阅登录遇到兼容问题，可使用 VS Code 中已有的官方 Codex 扩展，选择 `Sign in with ChatGPT`。官方说明：[登录方式](https://learn.chatgpt.com/docs/auth)、[套餐](https://learn.chatgpt.com/docs/pricing)、[Codex IDE](https://learn.chatgpt.com/docs/codex/ide)。
+
+## Cline + DeepSeek（可选）
 
 1. 在 WSL 窗口的扩展中确认 Cline 已安装到 `WSL: Ubuntu`；必要时点击“在 WSL: Ubuntu 中安装”。
 2. 打开 Cline 面板，进入设置，API Provider 选择 `DeepSeek`。
@@ -42,7 +56,9 @@ QEMU 退出：按 `Ctrl+A`，松开后按 `X`。不要将这些 Linux 编译命�
 4. 模型选择以官方当前可用模型和 Cline 支持情况为准。若内置提供方只显示旧模型，可选择 `OpenAI Compatible`，Base URL 填 `https://api.deepseek.com`，Model ID 按官方文档填写（2026-10-08 官方示例为 `deepseek-flash`）。
 5. Plan 和 Act 若分别配置，需要分别确认服务商与模型。先保留对文件修改和终端命令的审批。
 
-验证提示词：
+## AI 环境验证
+
+验证提示词（登录任意提供方后使用）：
 
 ```text
 读取 lab1/kern/init/init.c，解释 kern_init 的作用，暂时不要修改代码。
