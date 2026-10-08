@@ -2,7 +2,7 @@
 
 本项目来自配套材料 `lab1(1).zip`，使用 Windows VS Code + WSL2 Ubuntu 编译运行。
 
-2026-10-08 已验证：编译成功，QEMU 能输出 `(THU.CST) os is loading ...`，GDB 能命中 `kern_init` 硬件断点。代码已推送到 GitHub。AI 的完整验证需要先在 Cline 中登录 ChatGPT Plus 或配置模型 API。
+2026-10-08 已验证：编译成功，QEMU 能输出 `(THU.CST) os is loading ...`，GDB 能命中 `kern_init` 硬件断点。代码已推送到 GitHub。Cline 的 Plus 订阅调用已成功读取源码、执行终端命令并生成解释；还需通过 Cline 验证创建测试文件、编译和运行的完整流程。
 
 ## 打开项目
 
@@ -29,6 +29,8 @@ QEMU 退出：按 `Ctrl+A`，松开后按 `X`。不要将这些 Linux 编译命�
 也可以按 `Ctrl+Shift+B` 编译；在“终端 → 运行任务”中选择 QEMU 或 GDB 任务。
 
 编译器来自 Ubuntu 官方软件包，位于 `/usr/bin`，已经处于 PATH 中；本工作区的新终端设有 `RISCV=/usr`，无需再添加下载工具链的路径。Node.js 与 npm 安装在 WSL 中，版本分别为 22.22.1 和 9.2.0。
+
+源码搜索工具 `ripgrep`（`rg`）已安装，版本 15.1.0。
 
 为适配 QEMU 10.2.1 与当前 OpenSBI，Makefile 的运行、调试目标改用 `-kernel` 装载内核并提供启动入口；调试器优先使用工具链 GDB，缺失时使用 `gdb-multiarch`。未修改实验 C/汇编源代码。
 
