@@ -48,6 +48,8 @@ QEMU 退出：按 `Ctrl+A`，松开后按 `X`。不要将这些 Linux 编译命�
 
 若插件的订阅登录遇到兼容问题，可使用 VS Code 中已有的官方 Codex 扩展，选择 `Sign in with ChatGPT`。官方说明：[登录方式](https://learn.chatgpt.com/docs/auth)、[套餐](https://learn.chatgpt.com/docs/pricing)、[Codex IDE](https://learn.chatgpt.com/docs/codex/ide)。
 
+本机曾出现浏览器登录成功、Cline 请求仍报缺少 API Key：WSL 直接访问 OpenAI 认证服务返回 403，通过现有 Windows 代理则返回 200。已为 VS Code 的 WSL 服务设置启动代理环境，并验证 Node 的 fetch 返回 200。OpenAI 调用时需要保持现有代理运行。服务重启后，在 Cline 中退出并重新完成一次订阅登录，再发起新对话验证。相关配置方式见 [VS Code WSL 环境与代理说明](https://code.visualstudio.com/docs/remote/wsl) 和 [Node 环境代理说明](https://nodejs.org/learn/http/enterprise-network-configuration)。
+
 ## Cline + DeepSeek（可选）
 
 1. 在 WSL 窗口的扩展中确认 Cline 已安装到 `WSL: Ubuntu`；必要时点击“在 WSL: Ubuntu 中安装”。
