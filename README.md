@@ -38,7 +38,7 @@ QEMU 退出：按 `Ctrl+A`，松开后按 `X`。不要将这些 Linux 编译命�
 
 本机安装的 Cline 4.1.23 包含 ChatGPT 订阅登录功能。
 
-1. 打开 WSL 工作区的 Cline 面板，进入设置。
+1. 打开 WSL 工作区的 Cline 面板。首次看到 `How will you use Cline?` 时，选择 `Bring my own API key`，点击 `Continue`，进入 `Configure your provider`。这个入口也支持订阅授权，不要求必须有 API Key；配置过之后可以直接进入设置。
 2. API Provider 选择 `OpenAI ChatGPT Subscription`（内部提供方为 `openai-codex`）。
 3. 点击 `Sign in to OpenAI Codex`，按插件提示完成浏览器登录或设备码授权，登录已有 Plus 账号。
 4. 从提供方支持的模型列表中选择模型；若 Plan 和 Act 分别设置，分别确认使用相同提供方。
