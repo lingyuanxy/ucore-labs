@@ -1,0 +1,10 @@
+lab*/bin/
+lab*/obj/
+lab*/.gdb.in
+lab*/.qemu.out
+*.log
+.env
+.env.*
+!.env.example
+*.pem
+*.key

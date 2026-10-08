@@ -1,0 +1,13 @@
+{
+  "files.eol": "\n",
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.env.linux": { "RISCV": "/usr" },
+  "C_Cpp.default.compilerPath": "/usr/bin/riscv64-unknown-elf-gcc",
+  "C_Cpp.default.cStandard": "gnu99",
+  "C_Cpp.default.includePath": [
+    "${workspaceFolder}/lab1/libs",
+    "${workspaceFolder}/lab1/kern/driver",
+    "${workspaceFolder}/lab1/kern/libs",
+    "${workspaceFolder}/lab1/kern/mm"
+  ]
+}

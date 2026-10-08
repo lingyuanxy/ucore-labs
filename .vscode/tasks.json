@@ -1,0 +1,37 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "uCore: build lab1",
+      "type": "process",
+      "command": "make",
+      "options": { "cwd": "${workspaceFolder}/lab1" },
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "uCore: run lab1 (QEMU)",
+      "type": "process",
+      "command": "make",
+      "args": ["qemu"],
+      "options": { "cwd": "${workspaceFolder}/lab1" },
+      "problemMatcher": []
+    },
+    {
+      "label": "uCore: debug server lab1",
+      "type": "process",
+      "command": "make",
+      "args": ["debug"],
+      "options": { "cwd": "${workspaceFolder}/lab1" },
+      "problemMatcher": []
+    },
+    {
+      "label": "uCore: GDB lab1",
+      "type": "process",
+      "command": "gdb-multiarch",
+      "args": ["bin/kernel", "-ex", "set arch riscv:rv64", "-ex", "target remote localhost:1234"],
+      "options": { "cwd": "${workspaceFolder}/lab1" },
+      "problemMatcher": []
+    }
+  ]
+}
