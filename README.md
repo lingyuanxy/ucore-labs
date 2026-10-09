@@ -2,7 +2,7 @@
 
 本项目来自配套材料 `lab1(1).zip`，使用 Windows VS Code + WSL2 Ubuntu 编译运行。
 
-2026-10-08 已验证：编译成功，QEMU 能输出 `(THU.CST) os is loading ...`，GDB 能命中 `kern_init` 硬件断点。代码已推送到 GitHub。Cline 的 Plus 订阅调用已成功读取源码、执行终端命令并生成解释；还需通过 Cline 验证创建测试文件、编译和运行的完整流程。
+2026-10-09 已按老师要求将操作系统实验固定为 QEMU **4.1.1**，使用自带 OpenSBI v0.4，实际启动输出 `(THU.CST) os is loading ...`。现有 QEMU 10.2.1 和 `/opt/qemu` 中的 7.0.0 均保留，系统默认版本不变。Cline 的 Plus 订阅调用已成功读取源码、执行终端命令并生成解释。
 
 ## 打开项目
 
@@ -19,7 +19,8 @@ code --new-window --folder-uri 'vscode-remote://wsl+Ubuntu/mnt/c/Users/李孟德
 ```bash
 cd lab1
 riscv64-unknown-elf-gcc --version
-qemu-system-riscv64 --version
+/opt/qemu-4.1.1/bin/qemu-system-riscv64 --version
+make print-qemu
 make
 make qemu
 ```
@@ -32,7 +33,11 @@ QEMU 退出：按 `Ctrl+A`，松开后按 `X`。不要将这些 Linux 编译命�
 
 源码搜索工具 `ripgrep`（`rg`）已安装，版本 15.1.0。
 
-为适配 QEMU 10.2.1 与当前 OpenSBI，Makefile 的运行、调试目标改用 `-kernel` 装载内核并提供启动入口；调试器优先使用工具链 GDB，缺失时使用 `gdb-multiarch`。未修改实验 C/汇编源代码。
+本实验 Makefile 的默认 `QEMU` 为 `/opt/qemu-4.1.1/bin/qemu-system-riscv64`，运行、调试目标恢复课程原来的 `-device loader,file=bin/ucore.img,addr=0x80200000` 参数。调试器优先使用工具链 GDB，缺失时使用 `gdb-multiarch`。未修改实验 C/汇编源代码。
+
+仅此工作区的 VS Code 新终端设置了 `QEMU` 环境变量，方便后续实验中采用 `ifndef QEMU` 的 Makefile 使用同一版本；全局 PATH 没有添加旧版路径。修改配置前已打开的终端需要关闭后新建。直接运行 `qemu-system-riscv64 --version` 仍可能显示 10.2.1，这是系统默认版本；本实验实际版本应通过上面的完整路径和 `make print-qemu` 检查。其他项目按原来的命令使用已有新版。
+
+4.1.1 来自 [QEMU 官方源码包](https://download.qemu.org/qemu-4.1.1.tar.xz)，独立安装到 `/opt/qemu-4.1.1`，包括 riscv32、riscv64 系统模拟器及其配套固件。未替换 `/usr/bin` 或 `/opt/qemu` 中的现有程序。
 
 调试时先启动 `uCore: debug server lab1`，然后在另一个终端运行 `uCore: GDB lab1`。默认 GDB 服务监听本机端口 1234。
 
