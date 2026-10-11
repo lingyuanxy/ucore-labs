@@ -25,14 +25,15 @@ code --new-window --folder-uri 'vscode-remote://wsl+Ubuntu/mnt/c/Users/李孟德
 
 ```bash
 cd lab1
+cp Makefile.local.example Makefile.local  # 首次配置时执行；已有本地配置则跳过
+# 编辑 Makefile.local，填写本机 QEMU 4.1.1 和 GDB 路径
 riscv64-unknown-elf-gcc --version
-/opt/qemu-4.1.1/bin/qemu-system-riscv64 --version
 make print-qemu
 make
 make qemu
 ```
 
-QEMU 退出：按 `Ctrl+A`，松开后按 `X`。不要将这些 Linux 编译命令放在 Windows PowerShell 中运行。
+QEMU 退出：按 `Ctrl+A`，松开后按小写 `x`。不要将这些 Linux 编译命令放在 Windows PowerShell 中运行。
 
 也可以按 `Ctrl+Shift+B` 编译；在“终端 → 运行任务”中选择 QEMU 或 GDB 任务。
 
@@ -40,13 +41,17 @@ QEMU 退出：按 `Ctrl+A`，松开后按 `X`。不要将这些 Linux 编译命�
 
 源码搜索工具 `ripgrep`（`rg`）已安装，版本 15.1.0。
 
-本实验 Makefile 的默认 `QEMU` 为 `/opt/qemu-4.1.1/bin/qemu-system-riscv64`，运行、调试目标恢复课程原来的 `-device loader,file=bin/ucore.img,addr=0x80200000` 参数。调试器优先使用工具链 GDB，缺失时使用 `gdb-multiarch`。未修改实验 C/汇编源代码。
+共享 Makefile 默认从 PATH 查找 `qemu-system-riscv64`、工具链 GDB（缺失时查找 `gdb-multiarch`）和编译器。每台电脑的工具路径写在 `lab1/Makefile.local` 中，该文件已被 `.gitignore` 忽略；配置模板 `lab1/Makefile.local.example` 随仓库共享。可设置 `QEMU`、`GDB` 和 `GCCPREFIX`，也可以通过命令行覆盖，例如 `make gdb GDB=/完整路径/调试器`。运行、调试目标使用课程原来的 `-device loader,file=bin/ucore.img,addr=0x80200000` 参数，未修改实验 C/汇编源代码。
 
-仅此工作区的 VS Code 新终端设置了 `QEMU` 环境变量，方便后续实验中采用 `ifndef QEMU` 的 Makefile 使用同一版本；全局 PATH 没有添加旧版路径。修改配置前已打开的终端需要关闭后新建。直接运行 `qemu-system-riscv64 --version` 仍可能显示 10.2.1，这是系统默认版本；本实验实际版本应通过上面的完整路径和 `make print-qemu` 检查。其他项目按原来的命令使用已有新版。
+VS Code 任务和终端里的 `make` 都读取同一份本地配置，工作区设置不再固定 QEMU 路径。当前电脑的 `Makefile.local` 保留 `/opt/qemu-4.1.1/bin/qemu-system-riscv64` 和 `/home/viewfinder/toolchains/os-freedom-tools/bin/riscv64-unknown-elf-gdb`。其他电脑按自己的安装位置填写；没有本地配置时会使用 PATH 中的工具，需确认 QEMU 为课程要求的 4.1.1。可用 `make print-qemu print-gdb` 核对选用路径。
 
 4.1.1 来自 [QEMU 官方源码包](https://download.qemu.org/qemu-4.1.1.tar.xz)，独立安装到 `/opt/qemu-4.1.1`，包括 riscv32、riscv64 系统模拟器及其配套固件。未替换 `/usr/bin` 或 `/opt/qemu` 中的现有程序。
 
-调试时先启动 `uCore: debug server lab1`，然后在另一个终端运行 `uCore: GDB lab1`。默认 GDB 服务监听本机端口 1234。
+调试时在 `lab1` 目录的两个 WSL 终端中分别运行 `make debug` 和 `make gdb`，也可以依次启动 VS Code 的 `uCore: debug server lab1` 和 `uCore: GDB lab1` 任务。默认通过 `lab1/bin/ucore-gdb.sock` 本地套接字连接；当前电脑的 QEMU 4.1.1 和 SiFive GDB 10.1 已验证支持此方式。
+
+`make gdb` 会自动连接。出现 `(gdb)` 后直接执行 `info registers pc`、`x/8i $pc` 或 `si`。首次连接应看到 PC 为 `0x1000`。在 QEMU 终端按 `Ctrl+A`，松开后按小写 `x` 退出；正常退出会删除调试套接字。若 QEMU 被强制杀死，先确认它已退出，再删除残留的 `bin/ucore-gdb.sock`。
+
+需要 TCP 调试时，两个终端分别使用 `make debug GDB_TRANSPORT=tcp` 和 `make gdb GDB_TRANSPORT=tcp`，连接地址为 `127.0.0.1:1234`。更换端口时，两条命令都加上相同的 `GDB_PORT=1235`。历史实验截图中的 TCP 启动流程保持为当时的操作记录。
 
 ## Cline + ChatGPT Plus（当前选用）
 

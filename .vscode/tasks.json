@@ -28,8 +28,8 @@
     {
       "label": "uCore: GDB lab1",
       "type": "process",
-      "command": "gdb-multiarch",
-      "args": ["bin/kernel", "-ex", "set arch riscv:rv64", "-ex", "target remote localhost:1234"],
+      "command": "make",
+      "args": ["gdb"],
       "options": { "cwd": "${workspaceFolder}/lab1" },
       "problemMatcher": []
     }

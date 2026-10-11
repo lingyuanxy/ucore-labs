@@ -1,5 +1,6 @@
 lab*/bin/
 lab*/obj/
+lab*/Makefile.local
 lab*/.gdb.in
 lab*/.qemu.out
 *.log

@@ -1,11 +1,16 @@
 {
   "files.eol": "\n",
+  "remote.portsAttributes": {
+    "1234": {
+      "label": "QEMU GDB",
+      "onAutoForward": "ignore"
+    }
+  },
   "terminal.integrated.defaultProfile.linux": "bash",
   "terminal.integrated.env.linux": {
-    "RISCV": "/usr",
-    "QEMU": "/opt/qemu-4.1.1/bin/qemu-system-riscv64"
+    "RISCV": "/usr"
   },
-  "C_Cpp.default.compilerPath": "/usr/bin/riscv64-unknown-elf-gcc",
+  "C_Cpp.default.compilerPath": "riscv64-unknown-elf-gcc",
   "C_Cpp.default.cStandard": "gnu99",
   "C_Cpp.default.includePath": [
     "${workspaceFolder}/lab1/libs",
