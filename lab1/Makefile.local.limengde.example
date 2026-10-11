@@ -1,0 +1,7 @@
+# 2413170 - Li Mengde. Paths verified on his WSL Ubuntu.
+# Copy to Makefile.local on Li Mengde's computer only.
+GCCPREFIX := /home/lingyuan/riscv-elf-toolchains/bin/riscv64-unknown-elf-
+GDB := /home/lingyuan/riscv-elf-toolchains/bin/riscv64-unknown-elf-gdb
+QEMU := /opt/qemu-4.1.1/bin/qemu-system-riscv64
+# Original-image loading used in Li Mengde's report screenshots.
+QEMU_LOAD := loader

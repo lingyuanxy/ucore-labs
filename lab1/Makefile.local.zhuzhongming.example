@@ -1,0 +1,8 @@
+# 2412075 - Zhu Zhongming. Paths from his c73a1b9 commit.
+# Copy to Makefile.local on Zhu Zhongming's computer only.
+# Verify these paths there; they have not been checked on his computer here.
+GCCPREFIX := /home/viewfinder/toolchains/os-freedom-tools/bin/riscv64-unknown-elf-
+GDB := /home/viewfinder/toolchains/os-freedom-tools/bin/riscv64-unknown-elf-gdb
+QEMU := /opt/qemu-4.1.1/bin/qemu-system-riscv64
+# ELF loading used in Zhu Zhongming's c73a1b9 Makefile.
+QEMU_LOAD := elf

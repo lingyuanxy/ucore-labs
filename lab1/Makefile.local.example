@@ -1,6 +1,9 @@
-# Copy this file to Makefile.local, then set paths for your computer.
-# Makefile.local is ignored by Git; command-line assignments take precedence.
-# Use the QEMU 4.1.1 installation required by the lab.
-# QEMU := /path/to/qemu-4.1.1/bin/qemu-system-riscv64
-# GDB := /path/to/os-freedom-tools/bin/riscv64-unknown-elf-gdb
-# GCCPREFIX := /path/to/compiler/bin/riscv64-unknown-elf-
+# Choose the named example for your computer and copy it to Makefile.local:
+# Li Mengde: Makefile.local.limengde.example
+# Zhu Zhongming: Makefile.local.zhuzhongming.example
+# Makefile.local is ignored by Git. Command-line assignments take precedence.
+# Generic configuration for other computers:
+QEMU := /opt/qemu-4.1.1/bin/qemu-system-riscv64
+# GCCPREFIX := /your/toolchain/bin/riscv64-unknown-elf-
+# GDB := /your/toolchain/bin/riscv64-unknown-elf-gdb
+QEMU_LOAD := loader

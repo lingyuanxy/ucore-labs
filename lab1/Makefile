@@ -5,9 +5,10 @@ SLASH	:= /
 
 V       := @
 
-#ifndef GCCPREFIX
-GCCPREFIX := /home/viewfinder/toolchains/os-freedom-tools/bin/riscv64-unknown-elf-
-#endif
+# Per-computer settings; ignored by Git. See Makefile.local.*.example.
+-include Makefile.local
+
+GCCPREFIX ?= riscv64-unknown-elf-
 
 ifndef QEMU
 QEMU := /opt/qemu-4.1.1/bin/qemu-system-riscv64
@@ -24,7 +25,11 @@ endif
 HOSTCC		:= gcc
 HOSTCFLAGS	:= -Wall -O2
 
-GDB		:= $(GCCPREFIX)gdb
+GDB		?= $(shell command -v $(GCCPREFIX)gdb 2>/dev/null || command -v gdb-multiarch)
+
+# loader: raw image at the lab address; elf: ELF supplied via -kernel.
+QEMU_LOAD ?= loader
+GDB_PORT ?= 1234
 
 CC		:= $(GCCPREFIX)gcc
 CFLAGS  := -mcmodel=medany -std=gnu99 -Wno-unused -Werror
@@ -135,6 +140,14 @@ $(UCOREIMG): $(kernel)
 
 $(call create_target,ucore.img)
 
+ifeq ($(QEMU_LOAD),loader)
+QEMU_KERNEL_ARGS = -device loader,file=$(UCOREIMG),addr=0x80200000
+else ifeq ($(QEMU_LOAD),elf)
+QEMU_KERNEL_ARGS = -kernel $(kernel)
+else
+$(error QEMU_LOAD must be loader or elf)
+endif
+
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 $(call finish_all)
@@ -163,21 +176,21 @@ qemu: $(UCOREIMG) $(SWAPIMG) $(SFSIMG)
 		-machine virt \
 		-nographic \
 		-bios default \
-		-kernel $(kernel)
+		$(QEMU_KERNEL_ARGS)
 
 debug: $(UCOREIMG) $(SWAPIMG) $(SFSIMG)
 	$(V)$(QEMU) \
 		-machine virt \
 		-nographic \
 		-bios default \
-		-kernel $(kernel) \
-		-s -S
+		$(QEMU_KERNEL_ARGS) \
+		-gdb tcp:127.0.0.1:$(GDB_PORT) -S
 
 gdb:
-	riscv64-unknown-elf-gdb \
+	$(GDB) \
     -ex 'file bin/kernel' \
     -ex 'set arch riscv:rv64' \
-    -ex 'target remote localhost:1234'
+    -ex 'target remote 127.0.0.1:$(GDB_PORT)'
 
 	
 .PHONY: grade touch

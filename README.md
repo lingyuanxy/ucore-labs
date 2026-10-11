@@ -13,7 +13,7 @@
 
 ## 打开项目
 
-在 Windows PowerShell 中运行：
+李孟德在自己的 Windows PowerShell 中运行（这是李孟德的项目路径）：
 
 ```powershell
 code --new-window --folder-uri 'vscode-remote://wsl+Ubuntu/mnt/c/Users/李孟德/Documents/Codex/2026-10-08/vscode/outputs/ucore-labs'
@@ -21,14 +21,59 @@ code --new-window --folder-uri 'vscode-remote://wsl+Ubuntu/mnt/c/Users/李孟德
 
 确认 VS Code 左下角显示 `WSL: Ubuntu`。若出现工作区信任提示，确认路径是自己的实验项目后信任。新建终端应是 Ubuntu 的 bash。
 
+朱钟铭的项目目录没有在提交中提供，需在 VS Code 中打开他自己的仓库目录，不使用上面的李孟德目录。
+
+## 两人的路径与本地配置
+
+共享 `lab1/Makefile` 管理编译、运行和调试规则；每台电脑的工具路径放在 `lab1/Makefile.local`。后者已被 Git 忽略，推送和拉取不会把一人的配置覆盖给另一人。
+
+| 项目 | 2413170－李孟德 | 2412075－朱钟铭 |
+| --- | --- | --- |
+| Ubuntu 用户目录 | `/home/lingyuan` | `/home/viewfinder` |
+| 编译器路径前缀 GCCPREFIX | `/home/lingyuan/riscv-elf-toolchains/bin/riscv64-unknown-elf-` | `/home/viewfinder/toolchains/os-freedom-tools/bin/riscv64-unknown-elf-` |
+| 调试器 GDB | `/home/lingyuan/riscv-elf-toolchains/bin/riscv64-unknown-elf-gdb` | `/home/viewfinder/toolchains/os-freedom-tools/bin/riscv64-unknown-elf-gdb` |
+| QEMU 4.1.1 | `/opt/qemu-4.1.1/bin/qemu-system-riscv64` | 提交中使用相同路径 `/opt/qemu-4.1.1/bin/qemu-system-riscv64` |
+| 配置示例 | [Makefile.local.limengde.example](lab1/Makefile.local.limengde.example) | [Makefile.local.zhuzhongming.example](lab1/Makefile.local.zhuzhongming.example) |
+| 默认加载方式 | `QEMU_LOAD=loader`，对应李孟德报告截图 | `QEMU_LOAD=elf`，保留朱钟铭提交中的方式 |
+
+李孟德的工具路径已在本机核对；朱钟铭的路径来自提交 `c73a1b9`，尚未在他的电脑上核验。两人的工具链版本可能不同，重新编译后的指令地址和展开形式也可能不同。报告中的实测地址来自李孟德当时的构建。
+
+首次配置时，在各自的 WSL 终端进入仓库的 `lab1`，选择自己的命令。已有 `Makefile.local` 时先查看内容，按需编辑，避免覆盖自己的配置。
+
+李孟德：
+
+```bash
+cp Makefile.local.limengde.example Makefile.local
+```
+
+朱钟铭：
+
+```bash
+cp Makefile.local.zhuzhongming.example Makefile.local
+```
+
+`GCCPREFIX` 是工具名称前缀，Makefile 会在末尾加上 `gcc`、`ld`、`objcopy` 等名称。它不是项目目录。命令行赋值优先于本地配置，例如 `make QEMU_LOAD=loader qemu`。
+
+## Makefile 的区别
+
+| 项目 | 李孟德原配置及报告操作 | 朱钟铭的提交 c73a1b9 | 当前共享规则 |
+| --- | --- | --- | --- |
+| 编译工具 | 从 PATH 查找工具，报告实测 GCC 15.1.0 | 固定 `/home/viewfinder/...` 前缀 | 从各自的 `Makefile.local` 读取路径 |
+| 内核加载 | `-device loader,file=bin/ucore.img,addr=0x80200000` | `-kernel bin/kernel` | 由 `QEMU_LOAD` 选择，默认 `loader` |
+| GDB 启动 | 使用 Makefile 的 GDB 变量 | gdb 目标直接写 `riscv64-unknown-elf-gdb`，没有使用配置的 GDB 变量 | 使用各自配置的 GDB 变量 |
+| 调试连接 | TCP，端口 1234 | TCP，端口 1234 | TCP `127.0.0.1:1234`；可设置 GDB_PORT |
+
+`bin/kernel` 是带入口、段布局、符号和调试信息的 ELF 文件；`bin/ucore.img` 是由它转换得到的原始二进制。`loader` 方式显式把原始镜像放在 `0x80200000`；`elf` 方式通过 QEMU 的 `-kernel` 参数提供 ELF，由 QEMU 的内核加载逻辑处理。两者是加载同一内核的不同方法，报告仍保留当时实际使用的 loader 记录。
+
+本次修正使 `Makefile.local` 真正生效；当前没有实现 README 旧描述中的默认 Unix 套接字或 `GDB_TRANSPORT` 切换。
+
 ## 编译与运行
 
 ```bash
 cd lab1
-cp Makefile.local.example Makefile.local  # 首次配置时执行；已有本地配置则跳过
-# 编辑 Makefile.local，填写本机 QEMU 4.1.1 和 GDB 路径
-riscv64-unknown-elf-gcc --version
-make print-qemu
+# 首次先按上文选好自己的 Makefile.local
+make print-gccprefix print-gdb print-qemu print-qemu_load
+/opt/qemu-4.1.1/bin/qemu-system-riscv64 --version
 make
 make qemu
 ```
@@ -37,21 +82,21 @@ QEMU 退出：按 `Ctrl+A`，松开后按小写 `x`。不要将这些 Linux 编�
 
 也可以按 `Ctrl+Shift+B` 编译；在“终端 → 运行任务”中选择 QEMU 或 GDB 任务。
 
-编译器来自 Ubuntu 官方软件包，位于 `/usr/bin`，已经处于 PATH 中；本工作区的新终端设有 `RISCV=/usr`，无需再添加下载工具链的路径。Node.js 与 npm 安装在 WSL 中，版本分别为 22.22.1 和 9.2.0。
+李孟德本机还装有 `/usr/bin` 下的 Ubuntu 软件包编译器；本实验的本地配置明确选择 `/home/lingyuan/riscv-elf-toolchains/bin/` 中的 GCC 15.1.0，以对应报告实测版本。`RISCV=/usr` 不会覆盖这里配置的 GCCPREFIX。Node.js 与 npm 安装在 WSL 中，版本分别为 22.22.1 和 9.2.0。
 
 源码搜索工具 `ripgrep`（`rg`）已安装，版本 15.1.0。
 
-共享 Makefile 默认从 PATH 查找 `qemu-system-riscv64`、工具链 GDB（缺失时查找 `gdb-multiarch`）和编译器。每台电脑的工具路径写在 `lab1/Makefile.local` 中，该文件已被 `.gitignore` 忽略；配置模板 `lab1/Makefile.local.example` 随仓库共享。可设置 `QEMU`、`GDB` 和 `GCCPREFIX`，也可以通过命令行覆盖，例如 `make gdb GDB=/完整路径/调试器`。运行、调试目标使用课程原来的 `-device loader,file=bin/ucore.img,addr=0x80200000` 参数，未修改实验 C/汇编源代码。
+没有本地配置时，共享 Makefile 默认从 PATH 查找交叉编译工具及 GDB（缺失时查找 `gdb-multiarch`），QEMU 默认固定为 `/opt/qemu-4.1.1/bin/qemu-system-riscv64`。其他电脑可使用通用配置示例 `lab1/Makefile.local.example`。未修改实验 C/汇编源代码。
 
-VS Code 任务和终端里的 `make` 都读取同一份本地配置，工作区设置不再固定 QEMU 路径。当前电脑的 `Makefile.local` 保留 `/opt/qemu-4.1.1/bin/qemu-system-riscv64` 和 `/home/viewfinder/toolchains/os-freedom-tools/bin/riscv64-unknown-elf-gdb`。其他电脑按自己的安装位置填写；没有本地配置时会使用 PATH 中的工具，需确认 QEMU 为课程要求的 4.1.1。可用 `make print-qemu print-gdb` 核对选用路径。
+VS Code 任务和终端里的 `make` 都读取同一份本地配置。李孟德本机已配置自己的工具路径；朱钟铭更新后按上文配置自己的电脑。已有新版 QEMU 保留，系统默认命令不变；本实验实际版本应通过 `make print-qemu` 输出的路径及该程序的 `--version` 核对。
 
 4.1.1 来自 [QEMU 官方源码包](https://download.qemu.org/qemu-4.1.1.tar.xz)，独立安装到 `/opt/qemu-4.1.1`，包括 riscv32、riscv64 系统模拟器及其配套固件。未替换 `/usr/bin` 或 `/opt/qemu` 中的现有程序。
 
-调试时在 `lab1` 目录的两个 WSL 终端中分别运行 `make debug` 和 `make gdb`，也可以依次启动 VS Code 的 `uCore: debug server lab1` 和 `uCore: GDB lab1` 任务。默认通过 `lab1/bin/ucore-gdb.sock` 本地套接字连接；当前电脑的 QEMU 4.1.1 和 SiFive GDB 10.1 已验证支持此方式。
+调试时在 `lab1` 目录的两个 WSL 终端中分别运行 `make debug` 和 `make gdb`，也可以依次启动 VS Code 的 `uCore: debug server lab1` 和 `uCore: GDB lab1` 任务。默认通过 TCP `127.0.0.1:1234` 连接。
 
-`make gdb` 会自动连接。出现 `(gdb)` 后直接执行 `info registers pc`、`x/8i $pc` 或 `si`。首次连接应看到 PC 为 `0x1000`。在 QEMU 终端按 `Ctrl+A`，松开后按小写 `x` 退出；正常退出会删除调试套接字。若 QEMU 被强制杀死，先确认它已退出，再删除残留的 `bin/ucore-gdb.sock`。
+`make gdb` 会自动连接。出现 `(gdb)` 后直接执行 `info registers pc`、`x/8i $pc` 或 `si`。首次连接应看到 PC 为 `0x1000`。在 QEMU 终端按 `Ctrl+A`，松开后按小写 `x` 退出。
 
-需要 TCP 调试时，两个终端分别使用 `make debug GDB_TRANSPORT=tcp` 和 `make gdb GDB_TRANSPORT=tcp`，连接地址为 `127.0.0.1:1234`。更换端口时，两条命令都加上相同的 `GDB_PORT=1235`。历史实验截图中的 TCP 启动流程保持为当时的操作记录。
+更换端口时，两条命令都加上相同的 `GDB_PORT=1235`。历史实验截图保持为当时的操作记录。
 
 ## Cline + ChatGPT Plus（当前选用）
 
