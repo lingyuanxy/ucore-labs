@@ -32,6 +32,79 @@
       "args": ["gdb"],
       "options": { "cwd": "${workspaceFolder}/lab1" },
       "problemMatcher": []
+    },
+    {
+      "label": "uCore: build lab2",
+      "type": "process",
+      "command": "make",
+      "args": [],
+      "options": {
+        "cwd": "${workspaceFolder}/lab2"
+      },
+      "problemMatcher": [
+        "$gcc"
+      ]
+    },
+    {
+      "label": "uCore: run lab2 (QEMU)",
+      "type": "process",
+      "command": "make",
+      "args": [
+        "qemu"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/lab2"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "uCore: grade lab2",
+      "type": "process",
+      "command": "make",
+      "args": [
+        "grade"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/lab2"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "uCore: run lab2 Buddy",
+      "type": "process",
+      "command": "make",
+      "args": [
+        "PMM=buddy",
+        "qemu"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/lab2"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "uCore: debug server lab2",
+      "type": "process",
+      "command": "make",
+      "args": [
+        "debug"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/lab2"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "uCore: GDB lab2",
+      "type": "process",
+      "command": "make",
+      "args": [
+        "gdb"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/lab2"
+      },
+      "problemMatcher": []
     }
   ]
 }

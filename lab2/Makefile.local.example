@@ -1,0 +1,4 @@
+# Copy to Makefile.local and set paths for your own machine.
+GCCPREFIX := riscv64-unknown-elf-
+GDB := gdb-multiarch
+QEMU := /opt/qemu-4.1.1/bin/qemu-system-riscv64

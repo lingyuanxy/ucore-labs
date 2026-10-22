@@ -4,6 +4,14 @@
 
 2026-10-09 已按老师要求将操作系统实验固定为 QEMU **4.1.1**，使用自带 OpenSBI v0.4，实际启动输出 `(THU.CST) os is loading ...`。现有 QEMU 10.2.1 和 `/opt/qemu` 中的 7.0.0 均保留，系统默认版本不变。Cline 的 Plus 订阅调用已成功读取源码、执行终端命令并生成解释。
 
+## 实验二：物理内存和页表
+
+- [实验二报告](lab2/实验报告.md)、[学习路线](lab2/学习路线.md)、[SPEC 与提示词](lab2/SPEC与提示词.md)。
+- 已完成物理内存初始化、Best Fit、Buddy System、SLUB 选做和 QEMU/MMU 的 GDB 调试。
+- 课程评分 20/20；两种 PMM 各在 64/128/256 MiB RAM 上通过启动和 SLUB 检查，真实日志见 `lab2/evidence`。
+- WSL 终端进入 `lab2` 后运行 `make qemu`；Buddy 用 `make PMM=buddy qemu`；评分用 `make grade`。
+- 详细复现及其他电脑配置见 [Lab2 使用说明](lab2/README.md)。
+
 ## 实验一报告
 
 - [最新实验报告](lab1/实验报告.md)
