@@ -1,0 +1,66 @@
+
+OpenSBI v0.4 (Jul  2 2019 11:53:53)
+   ____                    _____ ____ _____
+  / __ \                  / ____|  _ \_   _|
+ | |  | |_ __   ___ _ __ | (___ | |_) || |
+ | |  | | '_ \ / _ \ '_ \ \___ \|  _ < | |
+ | |__| | |_) |  __/ | | |____) | |_) || |_
+  \____/| .__/ \___|_| |_|_____/|____/_____|
+        | |
+        |_|
+
+Platform Name          : QEMU Virt Machine
+Platform HART Features : RV64ACDFIMSU
+Platform Max HARTs     : 8
+Current Hart           : 0
+Firmware Base          : 0x80000000
+Firmware Size          : 112 KB
+Runtime SBI Version    : 0.1
+
+PMP0: 0x0000000080000000-0x000000008001ffff (A)
+PMP1: 0x0000000000000000-0xffffffffffffffff (A,R,W,X)
+DTB Init
+HartID: 0
+DTB Address: 0x82200000
+Physical Memory from DTB:
+  Base: 0x0000000080000000
+  Size: 0x0000000008000000 (128 MB)
+  End:  0x0000000087ffffff
+DTB init completed
+(THU.CST) os is loading ...
+Special kernel symbols:
+  entry  0xffffffffc02000d8 (virtual)
+  etext  0xffffffffc0205d28 (virtual)
+  edata  0xffffffffc020c020 (virtual)
+  end    0xffffffffc0395a90 (virtual)
+Kernel executable memory footprint: 1623KB
+memory management: buddy_pmm_manager
+Original physical memory: base = 0x0000000080000000, size = 0x0000000008000000, end = 0x0000000088000000
+Available physical memory: base = 0x0000000080000000, size = 0x0000000008000000, end = 0x0000000088000000
+Free physical memory: start = 0x00000000804d6000, end = 0x0000000088000000, size = 0x0000000007b2a000
+buddy_check: begin
+buddy_check: basic passed
+buddy_check: init_memmap passed
+buddy_check: split passed
+buddy_check: merge passed
+buddy_check: partner passed
+buddy_check: non_power_two and partial release passed
+buddy_check: exhaustion passed
+buddy_check: stress passed
+buddy_check: all tests passed; kernel state restored
+check_alloc_page() succeeded!
+satp virtual address: 0xffffffffc020b000
+satp physical address: 0x000000008020b000
+slub_init: caches 16..2048 bytes, alignment 16
+slub_check: begin
+slub_check: basic passed
+slub_check: size_classes passed
+slub_check: alignment passed
+slub_check: data_integrity passed
+slub_check: reuse passed
+slub_check: multi_slab passed
+slub_check: large_alloc passed
+slub_check: page_reclaim passed
+slub_check: boundary passed
+slub_check: stress passed
+slub_check: all tests passed; PMM pages restored

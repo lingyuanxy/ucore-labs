@@ -1,0 +1,126 @@
+Breakpoint 1 at 0x37d820: file /home/viewfinder/qemu-4.1.1/target/riscv/cpu_helper.c, line 158.
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7ffff77ff6c0 (LWP 28530)]
+[New Thread 0x7ffff4ffe6c0 (LWP 28531)]
+[Switching to Thread 0x7ffff4ffe6c0 (LWP 28531)]
+
+Thread 3 "qemu-system-ris" hit Breakpoint 1, get_physical_address (env=env@entry=0x55555630f9a0, physical=physical@entry=0x7ffff4ffd830, prot=prot@entry=0x7ffff4ffd82c, addr=addr@entry=4096, access_type=access_type@entry=2, mmu_idx=mmu_idx@entry=3) at /home/viewfinder/qemu-4.1.1/target/riscv/cpu_helper.c:158
+158	{
+
+=== BARE/M-MODE TRANSLATION ===
+addr=0x1000 access_type=2 mmu_idx=3 satp=0
+#0  get_physical_address (env=env@entry=0x55555630f9a0, physical=physical@entry=0x7ffff4ffd830, prot=prot@entry=0x7ffff4ffd82c, addr=addr@entry=4096, access_type=access_type@entry=2, mmu_idx=mmu_idx@entry=3) at /home/viewfinder/qemu-4.1.1/target/riscv/cpu_helper.c:158
+#1  0x00005555558d20a0 in riscv_cpu_tlb_fill (cs=0x555556306f90, address=4096, size=0, access_type=MMU_INST_FETCH, mmu_idx=3, probe=false, retaddr=0) at /home/viewfinder/qemu-4.1.1/target/riscv/cpu_helper.c:451
+#2  0x000055555585394f in tlb_fill (cpu=cpu@entry=0x555556306f90, addr=addr@entry=4096, size=size@entry=0, access_type=access_type@entry=MMU_INST_FETCH, mmu_idx=mmu_idx@entry=3, retaddr=retaddr@entry=0) at /home/viewfinder/qemu-4.1.1/accel/tcg/cputlb.c:878
+#3  0x0000555555856ff5 in get_page_addr_code (env=0x55555630f9a0, addr=addr@entry=4096) at /home/viewfinder/qemu-4.1.1/accel/tcg/cputlb.c:1032
+#4  0x0000555555871c28 in tb_htable_lookup (cpu=cpu@entry=0x555556306f90, pc=pc@entry=4096, cs_base=cs_base@entry=0, flags=flags@entry=3, cf_mask=4278714368) at /home/viewfinder/qemu-4.1.1/accel/tcg/cpu-exec.c:339
+0x00005555558d20a0 in riscv_cpu_tlb_fill (cs=0x555556306f90, address=4096, size=0, access_type=MMU_INST_FETCH, mmu_idx=3, probe=false, retaddr=0) at /home/viewfinder/qemu-4.1.1/target/riscv/cpu_helper.c:451
+451	    ret = get_physical_address(env, &pa, &prot, address, access_type, mmu_idx);
+Value returned is $1 = 0
+bare_result=0x1000
+Breakpoint 2 at 0x5555558d1820: file /home/viewfinder/qemu-4.1.1/target/riscv/cpu_helper.c, line 158.
+
+Thread 3 "qemu-system-ris" hit Breakpoint 2, get_physical_address (env=env@entry=0x55555630f9a0, physical=physical@entry=0x7ffff4ffd390, prot=prot@entry=0x7ffff4ffd38c, addr=addr@entry=18446744072637956128, access_type=access_type@entry=1, mmu_idx=mmu_idx@entry=1) at /home/viewfinder/qemu-4.1.1/target/riscv/cpu_helper.c:158
+158	{
+
+=== SV39 KERNEL STORE ===
+addr=0xffffffffc020c020 access_type=1 mmu_idx=1 satp=0x800000000008020b
+#0  get_physical_address (env=env@entry=0x55555630f9a0, physical=physical@entry=0x7ffff4ffd390, prot=prot@entry=0x7ffff4ffd38c, addr=addr@entry=18446744072637956128, access_type=access_type@entry=1, mmu_idx=mmu_idx@entry=1) at /home/viewfinder/qemu-4.1.1/target/riscv/cpu_helper.c:158
+#1  0x00005555558d20a0 in riscv_cpu_tlb_fill (cs=0x555556306f90, address=18446744072637956128, size=1, access_type=MMU_DATA_STORE, mmu_idx=1, probe=false, retaddr=140737304134231) at /home/viewfinder/qemu-4.1.1/target/riscv/cpu_helper.c:451
+#2  0x000055555585394f in tlb_fill (cpu=cpu@entry=0x555556306f90, addr=addr@entry=18446744072637956128, size=size@entry=1, access_type=access_type@entry=MMU_DATA_STORE, mmu_idx=mmu_idx@entry=1, retaddr=retaddr@entry=140737304134231) at /home/viewfinder/qemu-4.1.1/accel/tcg/cputlb.c:878
+#3  0x0000555555857ade in store_helper (big_endian=false, size=1, retaddr=140737304134231, oi=<optimized out>, val=0, addr=18446744072637956128, env=0x55555630f9a0) at /home/viewfinder/qemu-4.1.1/include/exec/cpu-all.h:404
+#4  helper_ret_stb_mmu (env=0x55555630f9a0, addr=18446744072637956128, val=<optimized out>, oi=<optimized out>, retaddr=140737304134231) at /home/viewfinder/qemu-4.1.1/accel/tcg/cputlb.c:1642
+#5  0x00007ffff5050257 in code_gen_buffer ()
+#6  0x0000555555871906 in cpu_tb_exec (cpu=cpu@entry=0x555556306f90, itb=itb@entry=0x7ffff5050140 <code_gen_buffer+332051>) at /home/viewfinder/qemu-4.1.1/accel/tcg/cpu-exec.c:173
+#7  0x000055555587225d in cpu_loop_exec_tb (tb_exit=<synthetic pointer>, last_tb=<synthetic pointer>, tb=0x7ffff5050140 <code_gen_buffer+332051>, cpu=0x555556306f90) at /home/viewfinder/qemu-4.1.1/accel/tcg/cpu-exec.c:621
+#8  cpu_exec (cpu=cpu@entry=0x555556306f90) at /home/viewfinder/qemu-4.1.1/accel/tcg/cpu-exec.c:732
+#3  0x0000555555857ade in store_helper (big_endian=false, size=1, retaddr=140737304134231, oi=<optimized out>, val=0, addr=18446744072637956128, env=0x55555630f9a0) at /home/viewfinder/qemu-4.1.1/include/exec/cpu-all.h:404
+404	    return &env_archcpu(env)->parent_obj;
+
+=== TLB LOOKUP FRAME ===
+mmu_idx = 1
+tlb_addr = <optimized out>
+a_bits = <optimized out>
+haddr = <optimized out>
+index = 12
+entry = <optimized out>
+tlb_off = 8
+do_unaligned_access = <optimized out>
+mmu_idx = <optimized out>
+index = <optimized out>
+entry = <optimized out>
+tlb_addr = <optimized out>
+tlb_off = <optimized out>
+a_bits = <optimized out>
+haddr = <optimized out>
+do_unaligned_access = <optimized out>
+do_aligned_access = <optimized out>
+i = <optimized out>
+index2 = <optimized out>
+entry2 = <optimized out>
+page2 = <optimized out>
+tlb_addr2 = <optimized out>
+val8 = <optimized out>
+#0  get_physical_address (env=env@entry=0x55555630f9a0, physical=physical@entry=0x7ffff4ffd390, prot=prot@entry=0x7ffff4ffd38c, addr=addr@entry=18446744072637956128, access_type=access_type@entry=1, mmu_idx=mmu_idx@entry=1) at /home/viewfinder/qemu-4.1.1/target/riscv/cpu_helper.c:158
+158	{
+Temporary breakpoint 3 at 0x5555558d1a9c: file /home/viewfinder/qemu-4.1.1/target/riscv/cpu_helper.c, line 256.
+
+Thread 3 "qemu-system-ris" hit Temporary breakpoint 3, get_physical_address (env=env@entry=0x55555630f9a0, physical=physical@entry=0x7ffff4ffd390, prot=prot@entry=0x7ffff4ffd38c, addr=addr@entry=18446744072637956128, access_type=access_type@entry=1, mmu_idx=mmu_idx@entry=1) at /home/viewfinder/qemu-4.1.1/target/riscv/cpu_helper.c:256
+256	        if (!(pte & PTE_V)) {
+
+=== PAGE TABLE WALK LOCALS ===
+idx = 511
+pte_addr = 2149629944
+pte = 536871119
+ppn = 524288
+mode = 1
+base = 2149625856
+levels = 3
+ptidxbits = 9
+ptesize = <optimized out>
+vm = <optimized out>
+sum = 0
+mxr = <optimized out>
+__func__ = "get_physical_address"
+cs = 0x555556306f90
+va_bits = 39
+mask = 67108863
+masked_msbs = <optimized out>
+ptshift = 18
+i = 0
+root=0x8020b000 vpn2=511 expected_pte_addr=0x8020bff8
+0x00005555558d20a0 in riscv_cpu_tlb_fill (cs=0x555556306f90, address=18446744072637956128, size=1, access_type=MMU_DATA_STORE, mmu_idx=1, probe=false, retaddr=140737304134231) at /home/viewfinder/qemu-4.1.1/target/riscv/cpu_helper.c:451
+451	    ret = get_physical_address(env, &pa, &prot, address, access_type, mmu_idx);
+Value returned is $2 = 0
+translated_page=0x8020c000 byte_pa=0x8020c020 prot=7
+Temporary breakpoint 4 at 0x555555856eb0: file /home/viewfinder/qemu-4.1.1/accel/tcg/cputlb.c, line 846.
+
+Thread 3 "qemu-system-ris" hit Temporary breakpoint 4, tlb_set_page (cpu=cpu@entry=0x555556306f90, vaddr=vaddr@entry=18446744072637956096, paddr=2149629952, prot=7, mmu_idx=mmu_idx@entry=1, size=size@entry=4096) at /home/viewfinder/qemu-4.1.1/accel/tcg/cputlb.c:846
+846	{
+
+=== SOFTWARE TLB REFILL ===
+cpu = 0x555556306f90
+vaddr = 18446744072637956096
+paddr = 2149629952
+prot = 7
+mmu_idx = 1
+size = 4096
+#0  tlb_set_page (cpu=cpu@entry=0x555556306f90, vaddr=vaddr@entry=18446744072637956096, paddr=2149629952, prot=7, mmu_idx=mmu_idx@entry=1, size=size@entry=4096) at /home/viewfinder/qemu-4.1.1/accel/tcg/cputlb.c:846
+#1  0x00005555558d21f9 in riscv_cpu_tlb_fill (cs=0x555556306f90, address=18446744072637956128, size=<optimized out>, access_type=MMU_DATA_STORE, mmu_idx=1, probe=<optimized out>, retaddr=140737304134231) at /home/viewfinder/qemu-4.1.1/target/riscv/cpu_helper.c:472
+#2  0x000055555585394f in tlb_fill (cpu=cpu@entry=0x555556306f90, addr=addr@entry=18446744072637956128, size=size@entry=1, access_type=access_type@entry=MMU_DATA_STORE, mmu_idx=mmu_idx@entry=1, retaddr=retaddr@entry=140737304134231) at /home/viewfinder/qemu-4.1.1/accel/tcg/cputlb.c:878
+#3  0x0000555555857ade in store_helper (big_endian=false, size=1, retaddr=140737304134231, oi=<optimized out>, val=0, addr=18446744072637956128, env=0x55555630f9a0) at /home/viewfinder/qemu-4.1.1/include/exec/cpu-all.h:404
+#4  helper_ret_stb_mmu (env=0x55555630f9a0, addr=18446744072637956128, val=<optimized out>, oi=<optimized out>, retaddr=140737304134231) at /home/viewfinder/qemu-4.1.1/accel/tcg/cputlb.c:1642
+Temporary breakpoint 5 at 0x555555856ba9: file /home/viewfinder/qemu-4.1.1/accel/tcg/cputlb.c, line 835.
+
+Thread 3 "qemu-system-ris" hit Temporary breakpoint 5, tlb_n_used_entries_inc (mmu_idx=<optimized out>, env=<optimized out>) at /home/viewfinder/qemu-4.1.1/accel/tcg/cputlb.c:600
+600	    *d = *s;
+
+=== NEW SOFTWARE TLB ENTRY ===
+No locals.
+[Inferior 1 (process 28527) killed]

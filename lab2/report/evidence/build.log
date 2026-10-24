@@ -1,0 +1,19 @@
+make: Entering directory '/home/viewfinder/OS/ucore-labs/lab2/code'
++ cc kern/init/entry.S
++ cc kern/init/init.c
++ cc kern/libs/stdio.c
++ cc kern/debug/panic.c
++ cc kern/driver/console.c
++ cc kern/driver/dtb.c
++ cc kern/mm/best_fit_pmm.c
++ cc kern/mm/buddy_pmm.c
++ cc kern/mm/default_pmm.c
++ cc kern/mm/pmm.c
++ cc kern/mm/slub.c
++ cc libs/printfmt.c
++ cc libs/readline.c
++ cc libs/sbi.c
++ cc libs/string.c
++ ld /tmp/ucore-slub-c33jba6m/build/bin/kernel
+/home/viewfinder/toolchains/os-freedom-tools/bin/riscv64-unknown-elf-objcopy /tmp/ucore-slub-c33jba6m/build/bin/kernel --strip-all -O binary /tmp/ucore-slub-c33jba6m/build/bin/ucore.img
+make: Leaving directory '/home/viewfinder/OS/ucore-labs/lab2/code'

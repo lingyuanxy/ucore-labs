@@ -9,3 +9,6 @@ lab*/.qemu.out
 !.env.example
 *.pem
 *.key
+lab*/GPATH
+lab*/GRTAGS
+lab*/GTAGS

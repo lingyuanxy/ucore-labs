@@ -1,0 +1,39 @@
+{
+  "configurations": [
+    {
+      "name": "linux-gcc-x64",
+      "compilerPath": "/home/viewfinder/toolchains/os-freedom-tools/bin/riscv64-unknown-elf-gcc",
+      "compilerArgs": [
+        "${default}"
+      ],
+      "cStandard": "gnu99",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "${workspaceFolder}/lab2/code/libs",
+        "${workspaceFolder}/lab2/code/kern/debug",
+        "${workspaceFolder}/lab2/code/kern/driver",
+        "${workspaceFolder}/lab2/code/kern/mm",
+        "${workspaceFolder}/lab2/code/kern/libs",
+        "${workspaceFolder}/lab2/code/kern/init"
+      ],
+      "cppStandard": "${default}",
+      "intelliSenseMode": "linux-gcc-x64"
+    },
+    {
+      "name": "uCore lab1 (RISC-V 64)",
+      "compilerPath": "${default}",
+      "compilerArgs": [
+        "${default}"
+      ],
+      "cStandard": "${default}",
+      "includePath": [
+        "${workspaceFolder}/lab1/libs",
+        "${workspaceFolder}/lab1/kern/driver",
+        "${workspaceFolder}/lab1/kern/mm",
+        "${workspaceFolder}/lab1/kern/libs",
+        "${workspaceFolder}/lab1/kern/init"
+      ]
+    }
+  ],
+  "version": 4
+}
