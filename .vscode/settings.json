@@ -14,12 +14,12 @@
   "C_Cpp.default.compilerPath": "/home/viewfinder/toolchains/os-freedom-tools/bin/riscv64-unknown-elf-gcc",
   "C_Cpp.default.cStandard": "gnu99",
   "C_Cpp.default.includePath": [
-    "${workspaceFolder}/lab2/code/libs",
-    "${workspaceFolder}/lab2/code/kern/debug",
-    "${workspaceFolder}/lab2/code/kern/driver",
-    "${workspaceFolder}/lab2/code/kern/mm",
-    "${workspaceFolder}/lab2/code/kern/libs",
-    "${workspaceFolder}/lab2/code/kern/init"
+    "${workspaceFolder}/code/libs",
+    "${workspaceFolder}/code/kern/debug",
+    "${workspaceFolder}/code/kern/driver",
+    "${workspaceFolder}/code/kern/mm",
+    "${workspaceFolder}/code/kern/libs",
+    "${workspaceFolder}/code/kern/init"
   ],
   "C_Cpp_Runner.cCompilerPath": "/home/viewfinder/toolchains/os-freedom-tools/bin/riscv64-unknown-elf-gcc",
   "C_Cpp_Runner.cppCompilerPath": "/home/viewfinder/toolchains/os-freedom-tools/bin/riscv64-unknown-elf-g++",
@@ -67,12 +67,12 @@
   ],
   "C_Cpp_Runner.linkerArgs": [],
   "C_Cpp_Runner.includePaths": [
-    "${workspaceFolder}/lab2/code/libs",
-    "${workspaceFolder}/lab2/code/kern/debug",
-    "${workspaceFolder}/lab2/code/kern/driver",
-    "${workspaceFolder}/lab2/code/kern/mm",
-    "${workspaceFolder}/lab2/code/kern/libs",
-    "${workspaceFolder}/lab2/code/kern/init"
+    "${workspaceFolder}/code/libs",
+    "${workspaceFolder}/code/kern/debug",
+    "${workspaceFolder}/code/kern/driver",
+    "${workspaceFolder}/code/kern/mm",
+    "${workspaceFolder}/code/kern/libs",
+    "${workspaceFolder}/code/kern/init"
   ],
   "C_Cpp_Runner.includeSearch": [
     "*",

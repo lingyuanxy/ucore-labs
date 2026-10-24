@@ -2,11 +2,11 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "uCore: build lab1",
+      "label": "uCore: build lab2",
       "type": "process",
       "command": "make",
       "options": {
-        "cwd": "${workspaceFolder}/lab1"
+        "cwd": "${workspaceFolder}/code"
       },
       "group": {
         "kind": "build",
@@ -17,38 +17,38 @@
       ]
     },
     {
-      "label": "uCore: run lab1 (QEMU)",
+      "label": "uCore: run lab2 (QEMU)",
       "type": "process",
       "command": "make",
       "args": [
         "qemu"
       ],
       "options": {
-        "cwd": "${workspaceFolder}/lab1"
+        "cwd": "${workspaceFolder}/code"
       },
       "problemMatcher": []
     },
     {
-      "label": "uCore: debug server lab1",
+      "label": "uCore: debug server lab2",
       "type": "process",
       "command": "make",
       "args": [
         "debug"
       ],
       "options": {
-        "cwd": "${workspaceFolder}/lab1"
+        "cwd": "${workspaceFolder}/code"
       },
       "problemMatcher": []
     },
     {
-      "label": "uCore: GDB lab1",
+      "label": "uCore: GDB lab2",
       "type": "process",
       "command": "make",
       "args": [
         "gdb"
       ],
       "options": {
-        "cwd": "${workspaceFolder}/lab1"
+        "cwd": "${workspaceFolder}/code"
       },
       "problemMatcher": []
     }
