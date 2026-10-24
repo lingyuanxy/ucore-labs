@@ -1,5 +1,7 @@
 # 操作系统实验报告
 
+> 目录迁移说明：当前 `lab1` 分支根目录为 `code/` 和 `report/`，本文为 `report/report.md`，原有 17 张截图保留在 `report/images/`。以下实验时间、环境和调试值沿用原始记录；当前运行方式见根目录 README。提示词另汇总于 [prompt.md](prompt.md)。
+
 ## 实验基本信息
 
 | 项目 | 内容 |
@@ -73,7 +75,7 @@
 | 平台 | QEMU virt，64 位 RISC-V |
 | 固件 | QEMU 4.1.1 配套 OpenSBI v0.4，Runtime SBI Version 0.1 |
 | 调试器 | riscv64-unknown-elf-gdb，GNU GDB 16.3.90.20250610-git |
-| 实验目录 | 本仓库的 `lab1`，对应课程材料中的 `labcodes/lab1` |
+| 实验目录 | 本工作目录的 `code/`，对应课程材料中的 `labcodes/lab1` |
 
 已有新版 QEMU 保留，本实验 Makefile 使用独立路径选择 4.1.1。本人同时核对 `make print-qemu` 和该路径的 `--version`，确认实际版本，而不是仅查询系统默认程序。网站示例中的固件版本不作为本机实测版本填写。
 
