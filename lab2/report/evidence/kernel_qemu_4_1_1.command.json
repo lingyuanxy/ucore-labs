@@ -1,0 +1,10 @@
+[
+  "/home/viewfinder/qemu-4.1.1/riscv64-softmmu/qemu-system-riscv64",
+  "-machine",
+  "virt",
+  "-nographic",
+  "-bios",
+  "default",
+  "-device",
+  "loader,file=/tmp/ucore-slub-c33jba6m/build/bin/ucore.img,addr=0x80200000"
+]
