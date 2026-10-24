@@ -6,7 +6,10 @@
       "type": "process",
       "command": "make",
       "options": {
-        "cwd": "${workspaceFolder}/code"
+        "cwd": "${workspaceFolder}/code",
+        "env": {
+          "PATH": "/home/viewfinder/toolchains/os-freedom-tools/bin:${env:PATH}"
+        }
       },
       "group": {
         "kind": "build",
@@ -21,10 +24,14 @@
       "type": "process",
       "command": "make",
       "args": [
-        "qemu"
+        "qemu",
+        "QEMU=/home/viewfinder/qemu-4.1.1/riscv64-softmmu/qemu-system-riscv64"
       ],
       "options": {
-        "cwd": "${workspaceFolder}/code"
+        "cwd": "${workspaceFolder}/code",
+        "env": {
+          "PATH": "/home/viewfinder/toolchains/os-freedom-tools/bin:${env:PATH}"
+        }
       },
       "problemMatcher": []
     },
@@ -33,10 +40,14 @@
       "type": "process",
       "command": "make",
       "args": [
-        "debug"
+        "debug",
+        "QEMU=/home/viewfinder/qemu-4.1.1/riscv64-softmmu/qemu-system-riscv64"
       ],
       "options": {
-        "cwd": "${workspaceFolder}/code"
+        "cwd": "${workspaceFolder}/code",
+        "env": {
+          "PATH": "/home/viewfinder/toolchains/os-freedom-tools/bin:${env:PATH}"
+        }
       },
       "problemMatcher": []
     },
@@ -48,7 +59,10 @@
         "gdb"
       ],
       "options": {
-        "cwd": "${workspaceFolder}/code"
+        "cwd": "${workspaceFolder}/code",
+        "env": {
+          "PATH": "/home/viewfinder/toolchains/os-freedom-tools/bin:${env:PATH}"
+        }
       },
       "problemMatcher": []
     }

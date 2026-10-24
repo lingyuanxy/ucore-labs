@@ -9,7 +9,8 @@
 | 文件 | 用途及限制 |
 | --- | --- |
 | [versions.txt](versions.txt) | 实际工具版本；`/opt/qemu-4.1.1/` 内的程序实际为 7.0.0 |
-| [build.log](build.log) | 当前完整项目交叉编译和链接成功记录 |
+| [build.log](build.log) | 原实验完整项目交叉编译和链接成功记录 |
+| [worktree_build.log](worktree_build.log) | 目录迁移后在 `ucore-lab2/code` 重新完整编译成功，源码内容未改 |
 | [build_artifacts.sha256](build_artifacts.sha256) | 本轮使用的 ELF 和原始镜像 SHA-256；调试地址与这一构建对应 |
 | [source_hashes.json](source_hashes.json) | 本轮补全报告前的 `lab2/code` 文件摘要，用于确认报告工作未改实现 |
 | [kernel_qemu_4_1_1.log](kernel_qemu_4_1_1.log) | 真正 QEMU 4.1.1、OpenSBI v0.4、原 loader 参数的完整内核启动 |
