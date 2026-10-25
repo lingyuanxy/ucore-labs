@@ -1,14 +1,14 @@
 Debug profile CFLAGS=-mcmodel=medany -std=gnu99 -Wno-unused -Werror -fno-builtin -Wall -O0 -nostdinc -fno-stack-protector -ffunction-sections -fdata-sections -g -Ilibs/
 lab2 injection complete
-make[1]: Entering directory '/tmp/ucore-best-fit-uuf947fo/code'
-+ cc kern/init/init.c
+make[1]: Entering directory '/tmp/ucore-best-fit-gi3boozd/code'
 + cc kern/init/entry.S
-+ cc kern/libs/stdio.c
++ cc kern/init/init.c
 + cc kern/debug/panic.c
++ cc kern/libs/stdio.c
 + cc kern/driver/console.c
 + cc kern/driver/dtb.c
-+ cc kern/mm/buddy_pmm.c
 + cc kern/mm/best_fit_pmm.c
++ cc kern/mm/buddy_pmm.c
 + cc kern/mm/default_pmm.c
 + cc kern/mm/pmm.c
 + cc kern/mm/slub.c
@@ -19,4 +19,4 @@ make[1]: Entering directory '/tmp/ucore-best-fit-uuf947fo/code'
 + cc libs/string.c
 + ld bin/kernel
 /home/lingyuan/riscv-elf-toolchains/bin/riscv64-unknown-elf-objcopy bin/kernel --strip-all -O binary bin/ucore.img
-make[1]: Leaving directory '/tmp/ucore-best-fit-uuf947fo/code'
+make[1]: Leaving directory '/tmp/ucore-best-fit-gi3boozd/code'

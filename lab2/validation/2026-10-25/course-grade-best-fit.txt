@@ -1,4 +1,4 @@
-gmake[1]: Entering directory '/tmp/ucore-best-fit-uuf947fo/code' gmake[1]: Nothing to be done for 'TARGETS'. gmake[1]: Leaving directory '/tmp/ucore-best-fit-uuf947fo/code'
+gmake[1]: Entering directory '/tmp/ucore-best-fit-gi3boozd/code' gmake[1]: Nothing to be done for 'TARGETS'. gmake[1]: Leaving directory '/tmp/ucore-best-fit-gi3boozd/code'
   -check page init:                          OK
   -check best fit:                           OK
 Total Score: 20/20

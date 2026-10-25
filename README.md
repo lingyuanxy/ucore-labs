@@ -5,7 +5,7 @@
 | 实验 | 入口 |
 | --- | --- |
 | Lab1 | [实验报告](lab1/实验报告.md) |
-| Lab2 | [运行说明](lab2/README.md) · [正式报告](lab2/report/report.md) · [任务审查](lab2/report/requirements-audit.md) |
+| Lab2 | [运行说明](lab2/README.md) · [实验报告](lab2/实验报告.md) |
 
 在仓库根目录的 WSL 终端执行：
 

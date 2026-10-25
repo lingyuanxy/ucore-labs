@@ -22,8 +22,9 @@
   "partner_code_unchanged": true,
   "editable_noncode_documents": [
     "README.md",
+    "report/evidence/README.md",
     "report/images/README.md",
     "report/prompt.md",
-    "report/report.md"
+    "实验报告.md"
   ]
 }

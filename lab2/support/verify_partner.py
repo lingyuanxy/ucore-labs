@@ -11,12 +11,17 @@ from pathlib import Path
 from local_tools import ROOT, CODE, EVIDENCE, configuration, make_arguments
 
 EDITABLE_DOCUMENTS = frozenset({
-    "README.md", "report/report.md", "report/prompt.md", "report/images/README.md",
+    "README.md", "report/report.md", "report/prompt.md",
+    "report/images/README.md", "report/evidence/README.md",
 })
+DOCUMENT_RELOCATIONS = {"report/report.md": "实验报告.md"}
 
 
 def preservation():
     record = json.loads((EVIDENCE / "partner-source-manifest.json").read_text())
+    for target in DOCUMENT_RELOCATIONS.values():
+        if not (ROOT / target).is_file():
+            raise RuntimeError(f"Missing formal report: {target}")
     # The original manifest remains intact. Only documentation may be condensed;
     # allocator sources, course tests, drivers and five original prompts are frozen.
     protected = 0
@@ -29,7 +34,7 @@ def preservation():
             raise RuntimeError(f"Partner file changed: {item['source_path']}")
         protected += 1
     print(f"PASS preservation: {protected} protected files (all 43 code files and original test drivers); "
-          f"{len(EDITABLE_DOCUMENTS)} non-code documents may be updated; source {record['source_commit']}", flush=True)
+          f"{len(EDITABLE_DOCUMENTS)} original documents may be updated or moved; source {record['source_commit']}", flush=True)
 
 
 def run_log(command, name, cwd=CODE, timeout=45):
@@ -138,7 +143,8 @@ def main():
     result.update({"kernel_boot_ram_mib": [64, 128, 256],
                    "independent_backends": ["buddy", "best_fit", "default"],
                    "partner_code_unchanged": True,
-                   "editable_noncode_documents": sorted(EDITABLE_DOCUMENTS)})
+                   "editable_noncode_documents": sorted(
+                       DOCUMENT_RELOCATIONS.get(name, name) for name in EDITABLE_DOCUMENTS)})
     (EVIDENCE / "summary.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
 
 
