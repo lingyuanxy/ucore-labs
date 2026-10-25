@@ -1,6 +1,6 @@
 # Lab2：物理内存和页表实验报告
 
-> 更新日期：2026 年 10 月 24 日。本文根据 Lab2 指导书全部章节、当前源代码、实际提示词和编译运行记录整理。报告按提交要求命名为 `report.md`；个人分工及提交标识的待确认事项见第十三节。
+> 更新日期：2026 年 10 月 25 日。保留搭档 10 月 24 日的实现、提示词和历史现场，本轮重新对照桌面提供的 14 份指导书 HTML 审查，包含全部思考、分支和 Challenge。逐项结论见 [手册任务审查表](requirements-audit.md)。单独的“实验报告要求”页面正文未在这 14 份文件中，不能将本轮审查称为已复核该页。源码保持不变；分工表继续留空。
 
 完整提示词汇总见 [prompt.md](prompt.md)，题目一实操对话见 [gdb_test_1.md](gdb_test_1.md)。
 
@@ -18,15 +18,15 @@
 
 | 指导书任务 | 当前完成内容 | 验证依据 |
 | --- | --- | --- |
-| 模块一任务一 | `page_init()` 探测、布局、描述符初始化及空闲区登记 | 完整内核启动，RAM 和空闲区输出符合计算 |
+| 模块一任务一 | `page_init()` 探测、布局、描述符初始化及空闲区登记 | 完整启动及六项解析后输入注入通过，见 4.6 |
 | 模块一 Challenge | 获取硬件可用内存范围的思考题 | 第五节 |
-| 模块二任务一 | 理解 First-Fit 四个核心函数及改进空间 | 源码分析；三后端测试运行原有检查 |
-| 模块二任务二 | Best-Fit 完整模块、注册、精确匹配提前退出 | 原有 `basic_check()`、`best_fit_check()` 在专项驱动中执行 |
+| 模块二任务一 | 四个函数分析、改进讨论及参考实现缺陷复现 | 原有检查通过；新增尾插用例发现两处反向链接错误，见 6.3 |
+| 模块二任务二 | 完整模块、注册、原测试不变；独立选择 Best Fit 运行 | 专项与独立评分通过；源码切换形式的证据边界见 7.5 |
 | 模块二任务三 | Buddy 模块、接入及独立测试 | 完整内核及专项驱动通过 Buddy 全部检查 |
 | SLUB Challenge | 对象分配模块、接入、设计说明及测试 | 完整内核通过；三种 PMM 后端专项验证通过 |
-| GDB 分支任务 | 实际访存指令、QEMU 查表、TLB 查询与回填、M 模式对照 | 第十节及保存的两层 GDB 日志 |
+| GDB 分支任务 | 实际访存、查表、TLB miss/refill/hit、S 模式 Bare/Sv39 对照及 M 模式历史对照 | 第十节、六个建表问题和分支要求对照见 10.7–10.9 |
 
-当前 `init_pmm_manager()` 选择 `buddy_pmm_manager`，是完成任务三后的最终状态。Best-Fit 阶段的实现仍保留并可注册；专项驱动实际选择它执行了原有检查。不能将当前 Buddy 启动日志称为“当前内核正在运行 Best-Fit”。
+当前 `init_pmm_manager()` 选择 `buddy_pmm_manager`。Best-Fit 保留注册结构，专项和独立调试配置实际选择它执行原有检查。不能将 Buddy 启动日志称为 Best-Fit 启动，也不能把独立运行等同于已在源码中完成手册指定的选择器切换。现有常规测试通过，但本轮发现参考 First-Fit 的新边界缺陷，因此不作“所有要求无条件满足、全部边界无缺陷”的结论。
 
 ## 二、实验环境与证据
 
@@ -61,8 +61,9 @@
 ```text
 OpenSBI：准备启动参数，a1 指向 DTB
   → kern_entry：准备栈、设置 satp、sfence.vma、切换到内核高地址
-  → kern_init：清理 BSS，初始化控制台和 DTB
+  → kern_init：清理 BSS
       → dtb_init：解析并保存 RAM 起点、大小
+      → cons_init：初始化控制台
       → pmm_init
           → init_pmm_manager：选择 Buddy，初始化管理器内部状态
           → page_init：建立 pages[]，排除占用区
@@ -110,7 +111,7 @@ OpenSBI：准备启动参数，a1 指向 DTB
 
 需要区分“设备树报告 RAM”和“现在可以分配的 RAM”。`Available physical memory` 这一输出标签实际表示裁剪后的管理范围，其中仍包含内核等占用部分；`Free physical memory` 才是提交给 PMM 的区间。
 
-本轮验证了默认 DTB 的正常路径。设备树加法溢出、多个离散内存段、保留节点等复杂输入尚未完成独立注入测试，不能仅根据正常启动宣称所有硬件布局都已支持。当前实现以本实验的单段 RAM 和固定平台上界为前提。
+本轮除默认 DTB 正常路径，还验证了解析后 RAM 输入的零大小、起点过高、无空闲页、末端加法回绕、非对齐末端和低起点裁剪，见 4.6。注入发生在解析之后，不等于验证 DTB 解析器对任意畸形字节流的安全性；多个离散内存段、保留节点仍未全面测试。当前实现以本实验的单段 RAM 和固定平台上界为前提。
 
 ### 4.3 四类地址与页描述符
 
@@ -198,6 +199,21 @@ init_memmap(pa2page(free_start), (free_end - free_start) / PGSIZE);
 
 这里不是把 32768 页全部加入空闲链表。描述符数组本身占用 320 页；其前面的固件、内核等占用也必须排除。Buddy 和测试状态的静态数组已经计入内核 `end`，不会再次被分配。
 
+### 4.6 本轮输入边界实测
+
+在未修改的默认内核上，GDB 停在 `pmm_init()`，仅改变 `dtb_init()` 已缓存的 `memory_base/memory_size`，然后执行真实 `page_init()`。错误用例停在真实 `__panic` 并核对原因；成功用例停在 `buddy_check()` 入口，说明初始化已完成，再检查 `npage`、数组位置、保留标志和实际空闲页计数。
+
+| 用例 | 注入输入或条件 | 实际结果 |
+| --- | --- | --- |
+| 零大小 | base=`0x80000000`，size=0 | `invalid memory size` |
+| 起点过高 | base=`0x80300000`，高于内核物理起点 | `invalid memory base` |
+| 无完整空闲页 | base=`0x80000000`，size=`0x300000` | `no free memory available`，未进入分配器自检 |
+| 加法回绕 | base=`0x80000000`，size=`UINT64_MAX` | `invalid memory size`；本例通过末端顺序检查拒绝，不声称做了显式溢出检查 |
+| 末端非页对齐 | size=`0x7ffffff` | 向下截取完整页，空闲页数与布局推导一致 |
+| 下界裁剪 | base=`0x7ff00000`，size=`0x8100000` | 保留原始末端 `0x88000000`，描述符及空闲计数正确 |
+
+命令为 `make -C lab2 audit-page-init`。六份 GDB 脚本、现场输出及 [摘要](../validation/2026-10-25/page-init-summary.json)均保存。这是输入契约验证，不是畸形 DTB 全覆盖或不同真实 RAM 硬件的实测。无空闲页时的预期 panic 属于正确拒绝行为。
+
 ## 五、模块一 Challenge：如何获取可用物理内存范围
 
 如果 OS 无法预先知道 RAM 范围，首选由固件或引导程序提供硬件内存描述。本实验通过 OpenSBI 传入的 DTB 地址，解析内存节点 `reg` 属性取得 RAM 的起点和长度。
@@ -238,6 +254,16 @@ init_memmap(pa2page(free_start), (free_end - free_start) / PGSIZE);
 
 本任务是阅读与思考题，规格是说明四个函数的状态变化、分裂、回收和合并条件；没有另行生成 First-Fit 代码。AI 交互围绕“`default_free_pages` 在做什么”和“`page_link` 记录什么”等问题展开。
 
+### 6.3 新发现：参考 First-Fit 的尾插边界缺陷
+
+新增源码外审查用例复现两处错误：`default_init_memmap()` 和 `default_free_pages()` 向非空链表尾部插入更高地址的块后，没有退出遍历，下一轮会再次把已插入的节点插到自身之后，造成尾节点 `prev == self`。前向链及 `nr_free` 暂时可能看起来正确，但双向链表不变量已经破坏，后续删除或拆分可能使用错误前驱。
+
+最小场景分别为：①先登记相对页区间 `[0,2)`，再登记 `[4,6)`；②在 8 页区域连续分配四个 2 页块，再依次释放第一个、第三个块。两者都应得到两个互不相邻的空闲块，实际尾节点反向链接错误。同样两组场景在 Best-Fit 和 Buddy 下分配、释放及恢复均通过。
+
+当前 `default_pmm.c` 与桌面 `lab2.zip` 中 `lab2_new/kern/mm/default_pmm.c` 的 SHA-256 完全相同，故归类为框架参考实现自带缺陷，不归咎于搭档新增的 Best-Fit/Buddy。源码比较见 [course-source-comparison.json](../validation/2026-10-25/course-source-comparison.json)，实际记录见 [allocator-edge-tests.txt](../validation/2026-10-25/allocator-edge-tests.txt)。
+
+建议修复是尾插成功后退出循环，或采用 Best-Fit 那样在找到位置后统一向哨兵之前插入；当前按保留原码约束没有实施。`make -C lab2 audit-allocators` 成功退出仅表示复现了预期的两处已知错误，并非所有分配器边界测试通过。[审查摘要](../validation/2026-10-25/allocator-edge-summary.json)明确记录 `all_allocator_edge_cases_passed: false`。
+
 ## 七、功能模块二任务二：Best-Fit
 
 实现：[best_fit_pmm.c](../code/kern/mm/best_fit_pmm.c)。完整原始提示词：[writing-block.md](writing-block.md)。
@@ -271,6 +297,12 @@ init_memmap(pa2page(free_start), (free_end - free_start) / PGSIZE);
 ### 7.4 验证
 
 原有两个检查函数保持不变，三后端 Sv39 驱动实际执行 `best_fit_pmm_manager.check()`，然后运行 SLUB 测试并核对页数恢复。`best_fit_check()` 包含 5 页区域的局部释放，验证从不同大小的块中选择更合适者及恢复状态。该运行不等同于开启评分宏得到新的“6/6”评分输出，报告以保存日志中的实际成功标志为准。
+
+### 7.5 手册指定的接入形式与当前证据
+
+本次桌面“练习”页面明确要求在 `init_pmm_manager()` 中切换为 `best_fit_pmm_manager`。当前保留源码该处选择 Buddy；独立驱动和 GDB 配置证明 Best-Fit 实际初始化、运行和检查通过，但没有形成“源码选择器切为 Best-Fit”的当前提交版本或阶段提交证据。故结论是实现与运行验证通过，严格源码切换形式仍有待核对，不能用 20/20 代替这一说明。
+
+本次未改选择器，也未改原评分脚本或原两个 Best-Fit 测试。与桌面 ZIP 比较，`basic_check()` 和 `best_fit_check()` 的函数文本在统一换行后完全一致。当前 Buddy 默认用于展示任务三；如需提交源码切换形式的单独阶段版本，应在允许改变源码选择器后处理。
 
 ## 八、功能模块二任务三：Buddy System
 
@@ -534,6 +566,45 @@ get_physical_address() 返回 0x1000
 
 有趣的认识是“三级页表只走一层”和“不开分页也进入 QEMU 软件 TLB 路径”并不矛盾：前者由大页叶项决定，后者来自模拟器还承担宿主地址定位。只套用简化流程图容易误判，应结合具体状态解释。
 
+### 10.7 手册“建立页表的六个关键问题”逐项回答
+
+1. **哪些物理空间需要映射？** 启动至少应覆盖内核指令、栈、初始页表、静态数据，以及之后要访问的 RAM/描述符。当前根叶项覆盖物理 `[0x80000000,0xc0000000)`；其中默认实际 RAM 只有 `[0x80000000,0x88000000)`，映射成立不代表后半段存在 RAM。其他 MMIO 地址需按实际访问方式另行处理。
+2. **具体映射是什么？** 根项 511 将 `[0xffffffffc0000000,2^64)` 映射到 `[0x80000000,0xc0000000)`。内核 VA `0xffffffffc0200000` 对应 PA `0x80200000`，直接映射偏移为 `0xffffffff40000000`。这是本内核的映射策略，不是任意地址的换算规则。
+3. **根目录起点在哪里？** 符号 `boot_page_table_sv39` 在 `entry.S` 的数据区定义，按 4096 字节对齐。本轮根表 VA 为 `0xffffffffc020b000`，PA 为 `0x8020b000`；`satp.PPN` 保存 PA 右移 12 位所得 `0x8020b`，MODE=8。
+4. **其他页表在哪里，需要多大空间？** 当前根层已经直接使用 1 GiB 叶项，没有为该映射建立中间和末级页表。初始页表共一页，即 512×8=4096 字节。一般 Sv39 的下级表按映射需求分配，不能说所有配置都只用一页，也不能把三级结构误写成当前一定有三张表。
+5. **根目录项如何设置？** 前 511 项为 0，表示无效；第 511 项为 `(0x80000 << 10) | 0xcf`。V/R/W/X/A/D 置位，U/G 清零。由于 R/W/X 非全零，该项直接是叶子，不是下级表指针。
+6. **叶项如何设置？** 对当前 1 GiB 叶项，物理基址按 1 GiB 对齐，低层 PPN 部分为零，权限与内核启动需要匹配。若改为普通 4 KiB 映射，则中间项为有效的非叶项，末级项填写物理页号与权限；本实验未声称已实现通用动态建表器。
+
+### 10.8 本机 S 模式 Bare/Sv39 与真实 TLB 命中对照
+
+除搭档 10.5 中的 M 模式历史现场，本轮 `make trace` 实际捕获了同为 S 模式的两种取指路径，记录在 [host-mmu.txt](../validation/2026-10-25/host-mmu.txt)：
+
+| 项目 | 未开启分页 | 开启 Sv39 |
+| --- | --- | --- |
+| 地址 | `0x80200000` | `0xffffffffc02000d6` |
+| `mmu_idx` | 1（S 模式） | 1（S 模式） |
+| `satp` | 0 | `0x800000000008020b` |
+| 查表 | Bare 直接得到相同地址 | 根项 511 是叶项，一轮取得映射 |
+| 返回的 4 KiB 物理页基址 | `0x80200000` | `0x80200000` |
+| 最终字节物理地址 | `0x80200000` | `0x802000d6` |
+
+两次调用栈均包含 `get_page_addr_code → tlb_fill → riscv_cpu_tlb_fill → get_physical_address`，说明 QEMU 的软件地址定位缓存并非只有 Sv39 模式才参与。本例是取指对照，未冒称同一条数据存储在两种模式下完成了全部对照。
+
+[host-tlb.txt](../validation/2026-10-25/host-tlb.txt)另记录实际查询：首次 `addr_code=0xffffffffffffffff` 不匹配目标虚拟页，进入 refill；之后标签为 `0xffffffffc0200000`；随后同页的真实查询直接跳过未命中分支。客户机的入口、`satp`、根项和单步取指另见 [guest-kernel.txt](../validation/2026-10-25/guest-kernel.txt)。三组记录采用独立运行，避免客户机调试器读内存干扰同一次宿主观察。
+
+### 10.9 GDB 分支要求、思考与工具细节
+
+| 手册要求或思考 | 回答及证据 |
+| --- | --- |
+| 关键调用路径、分支与实际访存翻译 | 10.3–10.4 的存储指令及原日志；10.8 的当前取指补充 |
+| 单步查表，解释索引、PTE 与权限 | 10.3–10.4、`gdb_test_1.md`；根叶项只走一层，不能伪造完整三层访问 |
+| 找到并演示 TLB 查询 C 代码 | `cputlb.c:get_page_addr_code` 的 miss/refill/hit 实测；数据访问另有 `store_helper` 路径 |
+| QEMU 软件 TLB 与真实 CPU 的逻辑区别 | 10.5、10.8；软件缓存还要定位宿主 RAM/MMIO，并维护宿主访问所需标签和 addend |
+| 更简单的调试策略 | 在 QEMU 关键函数按必经地址、模式或访问类型设条件断点，可直接捕获；目标地址从当前 ELF 确定，不必每次同时手动控制两个 GDB |
+| 调试中有趣的细节及 AI 交互 | 10.6、11.2 与 `gdb_test_1.md`；包括入口断点设晚、两个 continue、optimized out、目录名与真实版本不一致 |
+| 不忽略 SIGPIPE 会怎样 | 宿主 GDB 可能因 QEMU 向已断开的通信端写入而停在信号处，打断预期流程；是否发生取决于运行。脚本用 `handle SIGPIPE nostop noprint pass` 保留信号交给进程的行为，本轮没有人为制造断链来声称捕获过该信号 |
+| 调试版 QEMU 是否需要替换系统安装 | 本机使用缓存源码目录下带符号的独立 4.1.1，可直接交给宿主 GDB；日常安装保持原样，调试不要求再次执行系统安装 |
+
 ## 十一、AI 提示词结构、问题与修正记录
 
 ### 11.1 提示词为什么这样写
@@ -569,7 +640,7 @@ Buddy 与 SLUB 的设计还重点防止了几类容易生成的错误：只用�
 
 ### 12.1 完整交叉编译
 
-在仓库根目录执行下列命令可使用独立输出目录构建，不需要改 Makefile：
+以下为搭档历史环境的可复现形式，执行目录是其独立 Lab2 根目录；在当前 `main` 仓库布局中对应 `lab2/`，而非整个 `ucore-labs` 根目录。可使用独立输出目录构建，不需要改原 Makefile：
 
 ```bash
 make -C code \
@@ -639,7 +710,24 @@ ALL SLUB SV39 TESTS PASSED
 
 ### 12.4 仍未覆盖的验证
 
-默认 DTB 的正常启动、当前算法测试和实际地址翻译已验证。尚未完整覆盖畸形 DTB 与所有整数边界、更多硬件内存布局、并发竞争、长期随机压力及性能基准。现有压力用例使用固定种子和有限次数，具有可重复性，但不是形式证明。
+默认 DTB 正常启动、六种解析后输入、原算法检查、SLUB 和实际地址翻译已验证。新增 First-Fit 尾插用例揭示两处已知缺陷，保留源码，未隐藏失败。尚未完整覆盖畸形 DTB 解析与所有整数边界、更多硬件内存布局、并发竞争、长期随机压力及性能基准。现有压力用例使用固定种子和有限次数，具有可重复性，但不是形式证明。
+
+### 12.5 当前主仓库的统一复现入口
+
+在 `ucore-labs` 根目录的 WSL 终端中执行：
+
+```bash
+make -C lab2
+make -C lab2 qemu
+# QEMU 内核进入空闲循环后，Ctrl+A，再按小写 x 退出
+make -C lab2 verify
+make -C lab2 trace
+make -C lab2 audit-page-init
+make -C lab2 audit-allocators
+make -C lab2 check-preservation
+```
+
+`verify` 检查默认 Buddy+SLUB 在 64/128/256 MiB 下启动、三后端原有专项及两种评分；256 MiB 的成功不表示突破代码中的 128 MiB 管理上界。`audit-page-init` 六例通过；`audit-allocators` 则明确复现两项已知 First-Fit 缺陷。二者分开报告，不能把审查驱动的零退出误写成参考实现无缺陷。
 
 ## 十三、重要知识点、原理联系及提交事项
 
@@ -688,7 +776,7 @@ ALL SLUB SV39 TESTS PASSED
 | `code/kern/mm/pmm.c:65` | `lab2 function1 YOUR CODE` | 2412075-朱钟铭 |
 | `code/kern/mm/best_fit_pmm.c:6` | `lab2 function2-2 YOUR CODE` | 2412075-朱钟铭 |
 
-这里是独立署名说明。用户要求不改动搭档代码，因此未替换原文件的 `YOUR CODE`；它不能冒充已经满足“必须在源码内替换标记”的字面要求。如果助教严格检查该项，仍需允许仅修改这两处注释。运行入口、署名说明和截图均不能替代这一源码内操作。
+这里是独立署名说明。用户要求不改动搭档代码，因此未替换原文件的 `YOUR CODE`。此前问题清单已将源码标识登记为待核对格式项；本次桌面 14 页未包含独立“实验报告要求”正文，不能从这些页面重新确认强制学号替换条款。若提交规则要求源码内替换，报告署名不能代替该操作，仍需在允许修改这两处注释后处理。
 
 #### 日常 Buddy 与独立 Best Fit 验证
 
@@ -716,7 +804,7 @@ IDE 在该 QEMU 硬件断点上显示红色暂停原因标签，是 `Hit breakpo
 
 ## 参考资料
 
-本报告阅读了 Lab2 入口、目标、练习、文件说明、分页各节、内存管理各节、GDB 调试及报告要求，共 18 个页面。主要引用如下：
+本次重新审查实际取得桌面 14 页，文件名、保存 URL 及 SHA-256 见 [manual-source-manifest.json](../validation/2026-10-25/manual-source-manifest.json)。下列列表保留搭档历史报告引用；其中独立“实验报告要求”等页面不在本次取得的 14 页正文内，在线读取亦未成功，故不声称本轮重新确认了其全部条款。
 
 - [Lab2：物理内存和页表](http://oslab.mobisys.top/lab2026/_book/lab2/lab2.html)
 - [实验目的](http://oslab.mobisys.top/lab2026/_book/lab2/lab2_1_goal.html)、[实验内容](http://oslab.mobisys.top/lab2026/_book/lab2/lab2_2_contents.html)、[练习](http://oslab.mobisys.top/lab2026/_book/lab2/lab2_2_1_exercise.html)、[文件说明](http://oslab.mobisys.top/lab2026/_book/lab2/lab2_2_2_files.html)

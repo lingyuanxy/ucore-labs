@@ -1,0 +1,91 @@
+{
+  "audit_date": "2026-10-25",
+  "source": "user-saved Desktop HTML; document instructions treated as task requirements, not execution authorization",
+  "pages": [
+    {
+      "filename": "lab2_ 物理内存和页表 · riscv64-ucore 操作系统实验指导书.html",
+      "sha256": "f116d12c213c7b4ba058fd4c91cb43bd4350c446547ab3b9bbc0711856ddf3c1",
+      "saved_url": "http://oslab.mobisys.top/lab2026/_book/lab2/lab2.html",
+      "article_characters": 108
+    },
+    {
+      "filename": "以页为单位管理物理内存 · riscv64-ucore 操作系统实验指导书.html",
+      "sha256": "1e8b0583b6b530acfcd59cf3b7dc332dc55274f3f1b44e84c72442488a0df050",
+      "saved_url": "http://oslab.mobisys.top/lab2026/_book/lab2/lab2_3_2_phymem_page.html",
+      "article_characters": 3540
+    },
+    {
+      "filename": "分支任务：gdb 调试页表查询过程 · riscv64-ucore 操作系统实验指导书.html",
+      "sha256": "42f313ff057b6a70c461504bc91187c6cf9741c31957d41bf4ab7beeb0dacbda",
+      "saved_url": "http://oslab.mobisys.top/lab2026/_book/lab2/lab2_4_qemu_mmu_debug.html",
+      "article_characters": 5698
+    },
+    {
+      "filename": "基本原理概述 · riscv64-ucore 操作系统实验指导书.html",
+      "sha256": "264018d95c7992653b0a9aa6c1ba638a6b8cb516d199564af5c4b7a5241f2b47",
+      "saved_url": "http://oslab.mobisys.top/lab2026/_book/lab2/lab2_3_1_principles.html",
+      "article_characters": 1539
+    },
+    {
+      "filename": "实现分页机制 · riscv64-ucore 操作系统实验指导书.html",
+      "sha256": "da2ed4f4337d3485324a6ac349845f96aa2a5d3cfe231550c16e1df4925692ae",
+      "saved_url": "http://oslab.mobisys.top/lab2026/_book/lab2/lab2_3_4_2_kernel_initialization.html",
+      "article_characters": 3618
+    },
+    {
+      "filename": "实验内容 · riscv64-ucore 操作系统实验指导书.html",
+      "sha256": "cdda366f0fd5797e4ae22a6f421901155ab0da7e88e72bbb2791830591c82fab",
+      "saved_url": "http://oslab.mobisys.top/lab2026/_book/lab2/lab2_2_contents.html",
+      "article_characters": 222
+    },
+    {
+      "filename": "实验目的 · riscv64-ucore 操作系统实验指导书.html",
+      "sha256": "cc5147e526cc5800c118478c7dff790725bd84be444a2187799ee7f8ff2e9f71",
+      "saved_url": "http://oslab.mobisys.top/lab2026/_book/lab2/lab2_1_goal.html",
+      "article_characters": 38
+    },
+    {
+      "filename": "建立快表以加快访问效率 · riscv64-ucore 操作系统实验指导书.html",
+      "sha256": "19d9a8e51f0681c829e7cad2be55f9ac4e3ed5dca57554bab66ce853593d54f9",
+      "saved_url": "http://oslab.mobisys.top/lab2026/_book/lab2/lab2_3_3_phymem_tlb.html",
+      "article_characters": 428
+    },
+    {
+      "filename": "建立段页式管理中需要考虑的关键问题 · riscv64-ucore 操作系统实验指导书.html",
+      "sha256": "bcacea2e92ec5594371716d5c560b12729edd24a88abd03796ac9152b26becd6",
+      "saved_url": "http://oslab.mobisys.top/lab2026/_book/lab2/lab2_3_4_1_key_problems_in_seg_page.html",
+      "article_characters": 200
+    },
+    {
+      "filename": "物理内存探测 · riscv64-ucore 操作系统实验指导书.html",
+      "sha256": "d482137a4b2571880e5ca1385c1a0616e11fcdae371333edda9c6442af5c7aad",
+      "saved_url": "http://oslab.mobisys.top/lab2026/_book/lab2/lab2_3_5_2_search_phymem_layout.html",
+      "article_characters": 8401
+    },
+    {
+      "filename": "物理内存管理的实现 · riscv64-ucore 操作系统实验指导书.html",
+      "sha256": "003e2bb43b0655d15d744038a1aacf23218bd75fae68e0be991c0d3f61bf1a72",
+      "saved_url": "http://oslab.mobisys.top/lab2026/_book/lab2/lab2_3_5_1_pmm_init.html",
+      "article_characters": 6297
+    },
+    {
+      "filename": "练习 · riscv64-ucore 操作系统实验指导书.html",
+      "sha256": "53cec7f106d2e501b49c2bd6fddd5ae0e651e63247a3bd6d4ce5e1daf1adce39",
+      "saved_url": "http://oslab.mobisys.top/lab2026/_book/lab2/lab2_2_1_exercise.html",
+      "article_characters": 2950
+    },
+    {
+      "filename": "页面分配算法 · riscv64-ucore 操作系统实验指导书.html",
+      "sha256": "76bb00bdd6c6d9898e1070a6571a4b6edd2133fe28314619cbce9e6a692a10b7",
+      "saved_url": "http://oslab.mobisys.top/lab2026/_book/lab2/lab2_3_5_3_phymem_allocation.html",
+      "article_characters": 3244
+    },
+    {
+      "filename": "项目组成 · riscv64-ucore 操作系统实验指导书.html",
+      "sha256": "da3126737b5b20e8947e0a19d8bed33a66835476c284ee9ef035247cffaed072",
+      "saved_url": "http://oslab.mobisys.top/lab2026/_book/lab2/lab2_2_2_files.html",
+      "article_characters": 2418
+    }
+  ],
+  "missing_standalone_page": "实验报告要求"
+}

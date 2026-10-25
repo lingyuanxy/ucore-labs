@@ -1,0 +1,15 @@
+{
+  "zip_entry": "lab2_new/kern/mm/default_pmm.c",
+  "reference_first_fit_identical_to_zip": true,
+  "reference_first_fit_sha256": "c6b62aec683e290616c3e6a9ebbe1272edb50722b6b2f422ef87d035eb0b3b00",
+  "best_fit_tests": {
+    "basic_check": {
+      "exact_after_line_endings": true,
+      "identical_after_whitespace_normalization": true
+    },
+    "best_fit_check": {
+      "exact_after_line_endings": true,
+      "identical_after_whitespace_normalization": true
+    }
+  }
+}

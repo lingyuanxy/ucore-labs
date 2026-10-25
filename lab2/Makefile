@@ -11,7 +11,7 @@ endif
 endif
 
 .DEFAULT_GOAL := all
-.PHONY: all qemu debug gdb grade grade-best-fit grade-original clean verify trace check-preservation
+.PHONY: all qemu debug gdb grade grade-best-fit grade-original clean verify trace audit-allocators audit-page-init check-preservation
 all qemu debug clean:
 	$(MAKE) -C code GCCPREFIX="$(GCCPREFIX)" QEMU="$(QEMU)" GDB="$(GDB)" $(if $(filter all,$@),,$@)
 
@@ -30,6 +30,12 @@ verify:
 
 trace:
 	python3 support/trace_mmu.py
+
+audit-allocators:
+	python3 support/audit_allocators.py
+
+audit-page-init:
+	python3 support/audit_page_init.py
 
 check-preservation:
 	python3 support/verify_partner.py --preservation-only

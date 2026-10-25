@@ -1,0 +1,12 @@
+{
+  "all_allocator_edge_cases_passed": false,
+  "audit_reproduction_completed": true,
+  "known_failures": [
+    "First-Fit init_memmap tail insertion",
+    "First-Fit free_pages tail insertion"
+  ],
+  "best_fit_edge_cases_passed": true,
+  "buddy_edge_cases_passed": true,
+  "protected_sources_changed": false,
+  "process_exit_meaning": "zero confirms reproduction, not defect-free allocators"
+}

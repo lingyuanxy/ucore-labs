@@ -1,0 +1,48 @@
+{
+  "method": "GDB changes cached parsed RAM values at pmm_init; DTB parser not fault-injected",
+  "kernel_sha256": "31dcd51474733413a7a9d4e544459a94df0b385663958f2df730dba5ed6173c1",
+  "cases": [
+    {
+      "case": "zero-size",
+      "memory_base": "0x80000000",
+      "memory_size": "0x0",
+      "expected": "invalid memory size",
+      "passed": true
+    },
+    {
+      "case": "base-above-kernel",
+      "memory_base": "0x80300000",
+      "memory_size": "0x1000000",
+      "expected": "invalid memory base",
+      "passed": true
+    },
+    {
+      "case": "no-free-pages",
+      "memory_base": "0x80000000",
+      "memory_size": "0x300000",
+      "expected": "no free memory available",
+      "passed": true
+    },
+    {
+      "case": "wrapped-end",
+      "memory_base": "0x80000000",
+      "memory_size": "0xffffffffffffffff",
+      "expected": "invalid memory size",
+      "passed": true
+    },
+    {
+      "case": "unaligned-end",
+      "memory_base": "0x80000000",
+      "memory_size": "0x7ffffff",
+      "expected": "valid layout before allocator self-check",
+      "passed": true
+    },
+    {
+      "case": "lower-base-clipping",
+      "memory_base": "0x7ff00000",
+      "memory_size": "0x8100000",
+      "expected": "valid layout before allocator self-check",
+      "passed": true
+    }
+  ]
+}

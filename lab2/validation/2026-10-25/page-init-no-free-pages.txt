@@ -1,0 +1,71 @@
+The target architecture is set to "riscv:rv64".
+0x0000000000001000 in ?? ()
+Hardware assisted breakpoint 1 at 0xffffffffc0202ce8: file kern/mm/pmm.c, line 38.
+
+Breakpoint 1, pmm_init () at kern/mm/pmm.c:128
+128	    init_pmm_manager();
+AUDIT INPUT: no-free-pages
+$1 = 0x80000000
+$2 = 0x300000
+Hardware assisted breakpoint 2 at 0xffffffffc02001d0: file kern/debug/panic.c, line 12.
+Hardware assisted breakpoint 3 at 0xffffffffc02017e4: file kern/mm/buddy_pmm.c, line 652.
+
+Breakpoint 2, __panic (file=file@entry=0xffffffffc0207308 "kern/mm/pmm.c", line=line@entry=106, fmt=fmt@entry=0xffffffffc02073f8 "no free memory available") at kern/debug/panic.c:12
+12	    if (is_panic) {
+#0  __panic (file=file@entry=0xffffffffc0207308 "kern/mm/pmm.c", line=line@entry=106, fmt=fmt@entry=0xffffffffc02073f8 "no free memory available") at kern/debug/panic.c:12
+#1  0xffffffffc0202f0a in page_init () at kern/mm/pmm.c:106
+#2  pmm_init () at kern/mm/pmm.c:132
+#3  0xffffffffc020010e in kern_init () at kern/init/init.c:41
+#4  0x0000000080000a02 in ?? ()
+#0  __panic (file=file@entry=0xffffffffc0207308 "kern/mm/pmm.c", line=line@entry=106, fmt=fmt@entry=0xffffffffc02073f8 "no free memory available") at kern/debug/panic.c:12
+12	    if (is_panic) {
+file = 0xffffffffc0207308 "kern/mm/pmm.c"
+line = 106
+fmt = 0xffffffffc02073f8 "no free memory available"
+EXPECTED PANIC OBSERVED
+[Inferior 1 (process 1) detached]
+
+=== QEMU ===
+
+OpenSBI v0.4 (Jul  2 2019 11:53:53)
+   ____                    _____ ____ _____
+  / __ \                  / ____|  _ \_   _|
+ | |  | |_ __   ___ _ __ | (___ | |_) || |
+ | |  | | '_ \ / _ \ '_ \ \___ \|  _ < | |
+ | |__| | |_) |  __/ | | |____) | |_) || |_
+  \____/| .__/ \___|_| |_|_____/|____/_____|
+        | |
+        |_|
+
+Platform Name          : QEMU Virt Machine
+Platform HART Features : RV64ACDFIMSU
+Platform Max HARTs     : 8
+Current Hart           : 0
+Firmware Base          : 0x80000000
+Firmware Size          : 112 KB
+Runtime SBI Version    : 0.1
+
+PMP0: 0x0000000080000000-0x000000008001ffff (A)
+PMP1: 0x0000000000000000-0xffffffffffffffff (A,R,W,X)
+DTB Init
+HartID: 0
+DTB Address: 0x82200000
+Physical Memory from DTB:
+  Base: 0x0000000080000000
+  Size: 0x0000000008000000 (128 MB)
+  End:  0x0000000087ffffff
+DTB init completed
+(THU.CST) os is loading ...
+Special kernel symbols:
+  entry  0xffffffffc02000d6 (virtual)
+  etext  0xffffffffc0205d0a (virtual)
+  edata  0xffffffffc020c020 (virtual)
+  end    0xffffffffc0395a90 (virtual)
+Kernel executable memory footprint: 1623KB
+memory management: buddy_pmm_manager
+Original physical memory: base = 0x0000000080000000, size = 0x0000000000300000, end = 0x0000000080300000
+Available physical memory: base = 0x0000000080000000, size = 0x0000000000300000, end = 0x0000000080300000
+Free physical memory: start = 0x000000008039e000, end = 0x0000000080300000, size = 0xfffffffffff62000
+kernel panic at kern/mm/pmm.c:106:
+    no free memory available
+qemu-system-riscv64: terminating on signal 15 from pid 18850 (python3)

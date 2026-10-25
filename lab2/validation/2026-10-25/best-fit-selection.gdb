@@ -2,7 +2,7 @@ set pagination off
 set confirm off
 set remotetimeout 10
 file bin/kernel
-target remote 127.0.0.1:60781
+target remote 127.0.0.1:45447
 hbreak kern/mm/pmm.c:40
 continue
 echo \n=== Before PMM init: original default ===\n

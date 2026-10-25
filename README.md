@@ -10,7 +10,8 @@
 - [搭档正式报告](lab2/report/report.md)、[本机报告补充](lab2/实验报告.md)、[本机使用说明](lab2/本机使用说明.md)、[学习路线](lab2/学习路线.md)。
 - 默认 Buddy；原版内核和三后端 SLUB 专项验证均通过。独立 Best Fit 验证入口 `make grade` 为 **20/20**；原版 Buddy 直接评分入口仍保留。说明见 [问题清单](lab2/问题清单.md)。
 - WSL 进入 `lab2`，使用外层 `make`、`make qemu`、`make verify`、`make trace`；机器路径由个人 `Makefile.local` 提供。
-- 搭档代码保持原样，报告仅补充非代码的提交说明与真实截图；本机重新验证记录在 `lab2/validation/2026-10-25/`。
+- 搭档代码保持原样，报告补充手册要求分析、提交说明与真实截图；本机重新验证记录在 `lab2/validation/2026-10-25/`。
+- 已按桌面 14 页指导手册重新审查全部思考、分支和 Challenge，见[逐项审查](lab2/report/requirements-audit.md)。六种初始化输入通过；新增用例复现参考 First Fit 两处尾插缺陷，源码保留。Best Fit 独立运行与手册的源码切换形式分别说明，不作无条件全部完成的结论。
 
 ## 实验一报告
 

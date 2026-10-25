@@ -1,0 +1,8 @@
+$ /opt/qemu-4.1.1/bin/qemu-system-riscv64 -machine virt -m 128 -nographic -bios none -kernel /mnt/c/Users/李孟德/Documents/ChatGPT/操作系统/lab2/build/allocator-audit/edges.elf
+KNOWN_FAILURE First-Fit init_memmap tail insertion: tail.prev == tail: 1; disjoint blocks [0,2), [4,6)
+KNOWN_FAILURE First-Fit free_pages tail insertion: tail.prev == tail: 1; freed blocks [0,2), [4,6)
+PASS best_fit_pmm_manager: disjoint init_memmap tail insertion
+PASS best_fit_pmm_manager: free_pages tail insertion and recovery
+PASS buddy_pmm_manager: disjoint init_memmap tail insertion
+PASS buddy_pmm_manager: free_pages tail insertion and recovery
+AUDIT COMPLETE: 2 known failures; unchanged sources

@@ -18,7 +18,7 @@
     }
   },
   "artifacts_sha256": {
-    "bin/kernel": "6e0bc3175120777241e34180655443eeaf2f0935bcb2297bd91da0280752f42f",
+    "bin/kernel": "31dcd51474733413a7a9d4e544459a94df0b385663958f2df730dba5ed6173c1",
     "bin/ucore.img": "a605dbabd9ae5f17c3807fb8b957a151fec3933e06a94d7ff6a5e4641f5b8fa5"
   }
 }

@@ -65,4 +65,4 @@ slub_check: page_reclaim passed
 slub_check: boundary passed
 slub_check: stress passed
 slub_check: all tests passed; PMM pages restored
-qemu-system-riscv64: terminating on signal 15 from pid 4035 (python3)
+qemu-system-riscv64: terminating on signal 15 from pid 17089 (python3)
