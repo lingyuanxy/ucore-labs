@@ -1,0 +1,32 @@
+# 当前实验的本机构建产物与配置
+/code/bin/
+/code/obj/
+/code/Makefile.local
+/code/.gdb.in
+/code/.qemu.out
+
+# 旧布局的构建产物（查看旧版本时仍可使用）
+lab*/bin/
+lab*/code/bin/
+lab*/obj/
+lab*/code/obj/
+lab*/Makefile.local
+lab*/.gdb.in
+lab*/.qemu.out
+
+# 自动生成的源码索引与 Windows 下载附加标记
+GPATH
+GRTAGS
+GTAGS
+*:Zone.Identifier
+
+# 临时日志；报告中引用的验证日志必须提交
+*.log
+!/report/evidence/*.log
+
+# 本地环境和私密配置
+.env
+.env.*
+!.env.example
+*.pem
+*.key

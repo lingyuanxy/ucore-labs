@@ -6,11 +6,11 @@
 
 ## 实验二：物理内存和页表
 
-- [实验二报告](lab2/实验报告.md)、[学习路线](lab2/学习路线.md)、[SPEC 与提示词](lab2/SPEC与提示词.md)。
-- 已完成物理内存初始化、Best Fit、Buddy System、SLUB 选做和 QEMU/MMU 的 GDB 调试。
-- 课程评分 20/20；两种 PMM 各在 64/128/256 MiB RAM 上通过启动和 SLUB 检查，真实日志见 `lab2/evidence`。
-- WSL 终端进入 `lab2` 后运行 `make qemu`；Buddy 用 `make PMM=buddy qemu`；评分用 `make grade`。
-- 详细复现及其他电脑配置见 [Lab2 使用说明](lab2/README.md)。
+- 以搭档 `lab2` 分支的 `1444f66` 为主，全部 77 个原文件完整保留于 `lab2/`，其中源码在 `lab2/code/`。
+- [搭档正式报告](lab2/report/report.md)、[本机报告补充](lab2/实验报告.md)、[本机使用说明](lab2/本机使用说明.md)、[学习路线](lab2/学习路线.md)。
+- 默认 Buddy；原版内核和三后端 SLUB 专项验证均通过。原样课程评分为 **10/20**，原因见 [问题清单](lab2/问题清单.md)。
+- WSL 进入 `lab2`，使用外层 `make`、`make qemu`、`make verify`、`make trace`；机器路径由个人 `Makefile.local` 提供。
+- 搭档代码和历史报告未改写；2026-10-25 本机新记录在 `lab2/validation/2026-10-25/`，旧版记录在 `lab2/history/2026-10-22/`。
 
 ## 实验一报告
 

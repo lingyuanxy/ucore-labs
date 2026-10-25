@@ -1,0 +1,37 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "uCore lab2 (QEMU GDB)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/code/bin/kernel",
+      "cwd": "${workspaceFolder}/code",
+      "MIMode": "gdb",
+      "miDebuggerPath": "/home/viewfinder/toolchains/os-freedom-tools/bin/riscv64-unknown-elf-gdb",
+      "miDebuggerServerAddress": "127.0.0.1:1234",
+      "stopAtEntry": false,
+      "externalConsole": false,
+      "launchCompleteCommand": "None"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": false,
+      "cwd": "/home/viewfinder/OS/ucore-labs/lab2/code/kern/mm",
+      "program": "/home/viewfinder/OS/ucore-labs/lab2/code/kern/mm/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "/home/viewfinder/toolchains/os-freedom-tools/bin/riscv64-unknown-elf-gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+}

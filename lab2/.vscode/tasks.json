@@ -1,0 +1,70 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "uCore: build lab2",
+      "type": "process",
+      "command": "make",
+      "options": {
+        "cwd": "${workspaceFolder}/code",
+        "env": {
+          "PATH": "/home/viewfinder/toolchains/os-freedom-tools/bin:${env:PATH}"
+        }
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "problemMatcher": [
+        "$gcc"
+      ]
+    },
+    {
+      "label": "uCore: run lab2 (QEMU)",
+      "type": "process",
+      "command": "make",
+      "args": [
+        "qemu",
+        "QEMU=/home/viewfinder/qemu-4.1.1/riscv64-softmmu/qemu-system-riscv64"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/code",
+        "env": {
+          "PATH": "/home/viewfinder/toolchains/os-freedom-tools/bin:${env:PATH}"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "uCore: debug server lab2",
+      "type": "process",
+      "command": "make",
+      "args": [
+        "debug",
+        "QEMU=/home/viewfinder/qemu-4.1.1/riscv64-softmmu/qemu-system-riscv64"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/code",
+        "env": {
+          "PATH": "/home/viewfinder/toolchains/os-freedom-tools/bin:${env:PATH}"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "uCore: GDB lab2",
+      "type": "process",
+      "command": "make",
+      "args": [
+        "gdb"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/code",
+        "env": {
+          "PATH": "/home/viewfinder/toolchains/os-freedom-tools/bin:${env:PATH}"
+        }
+      },
+      "problemMatcher": []
+    }
+  ]
+}

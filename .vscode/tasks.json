@@ -5,32 +5,51 @@
       "label": "uCore: build lab1",
       "type": "process",
       "command": "make",
-      "options": { "cwd": "${workspaceFolder}/lab1" },
-      "group": { "kind": "build", "isDefault": true },
-      "problemMatcher": ["$gcc"]
+      "options": {
+        "cwd": "${workspaceFolder}/lab1"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [
+        "$gcc"
+      ]
     },
     {
       "label": "uCore: run lab1 (QEMU)",
       "type": "process",
       "command": "make",
-      "args": ["qemu"],
-      "options": { "cwd": "${workspaceFolder}/lab1" },
+      "args": [
+        "qemu"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/lab1"
+      },
       "problemMatcher": []
     },
     {
       "label": "uCore: debug server lab1",
       "type": "process",
       "command": "make",
-      "args": ["debug"],
-      "options": { "cwd": "${workspaceFolder}/lab1" },
+      "args": [
+        "debug"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/lab1"
+      },
       "problemMatcher": []
     },
     {
       "label": "uCore: GDB lab1",
       "type": "process",
       "command": "make",
-      "args": ["gdb"],
-      "options": { "cwd": "${workspaceFolder}/lab1" },
+      "args": [
+        "gdb"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/lab1"
+      },
       "problemMatcher": []
     },
     {
@@ -100,6 +119,30 @@
       "command": "make",
       "args": [
         "gdb"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/lab2"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "uCore: verify lab2 partner implementation",
+      "type": "process",
+      "command": "python3",
+      "args": [
+        "support/verify_partner.py"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/lab2"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "uCore: trace lab2 MMU",
+      "type": "process",
+      "command": "python3",
+      "args": [
+        "support/trace_mmu.py"
       ],
       "options": {
         "cwd": "${workspaceFolder}/lab2"

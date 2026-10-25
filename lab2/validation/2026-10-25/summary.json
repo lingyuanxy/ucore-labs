@@ -1,0 +1,15 @@
+{
+  "exit_code": 2,
+  "score": "Total Score: 10/20",
+  "kernel_boot_ram_mib": [
+    64,
+    128,
+    256
+  ],
+  "independent_backends": [
+    "buddy",
+    "best_fit",
+    "default"
+  ],
+  "partner_files_unchanged": true
+}

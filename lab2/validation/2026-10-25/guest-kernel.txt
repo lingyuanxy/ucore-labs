@@ -1,0 +1,39 @@
+The target architecture is set to "riscv:rv64".
+0x0000000000001000 in ?? ()
+Hardware assisted breakpoint 1 at 0x80200000
+
+Breakpoint 1, 0x0000000080200000 in ?? ()
+
+=== Physical kernel entry, paging disabled ===
+pc             0x80200000	0x80200000
+satp           0x0	0
+=> 0x80200000:	auipc	t0,0xc
+   0x80200004:	mv	t0,t0
+   0x80200008:	sd	a0,0(t0)
+   0x8020000c:	auipc	t0,0xc
+   0x80200010:	addi	t0,t0,-4
+   0x80200014:	sd	a1,0(t0)
+   0x80200018:	lui	t0,0xc020b
+   0x8020001c:	addiw	t1,zero,-3
+Hardware assisted breakpoint 2 at 0xffffffffc02000d6: file kern/init/init.c, line 31.
+
+Breakpoint 2, kern_init () at kern/init/init.c:31
+31	    memset(edata, 0, end - edata);
+
+=== Virtual C entry, paging enabled ===
+pc             0xffffffffc02000d6	0xffffffffc02000d6 <kern_init>
+satp           0x800000000008020b	-9223372036854250997
+=> 0xffffffffc02000d6 <kern_init>:	auipc	a0,0xc
+   0xffffffffc02000da <kern_init+4>:	addi	a0,a0,-182
+   0xffffffffc02000de <kern_init+8>:	auipc	a2,0x196
+   0xffffffffc02000e2 <kern_init+12>:	addi	a2,a2,-1614
+   0xffffffffc02000e6 <kern_init+16>:	addi	sp,sp,-16
+   0xffffffffc02000e8 <kern_init+18>:	sub	a2,a2,a0
+   0xffffffffc02000ea <kern_init+20>:	li	a1,0
+   0xffffffffc02000ec <kern_init+22>:	sd	ra,8(sp)
+$1 = 0xffffffffc020b000
+0xffffffffc020bff8:	0x00000000200000cf
+0xffffffffc02000da	31	    memset(edata, 0, end - edata);
+0xffffffffc02000de	31	    memset(edata, 0, end - edata);
+pc             0xffffffffc02000de	0xffffffffc02000de <kern_init+8>
+[Inferior 1 (process 1) detached]

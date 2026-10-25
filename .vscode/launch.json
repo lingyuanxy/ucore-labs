@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "uCore lab2 (preserved partner code)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/lab2/code/bin/kernel",
+      "cwd": "${workspaceFolder}/lab2/code",
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb-multiarch",
+      "miDebuggerServerAddress": "127.0.0.1:1234",
+      "stopAtEntry": false,
+      "externalConsole": false,
+      "launchCompleteCommand": "None"
+    }
+  ]
+}

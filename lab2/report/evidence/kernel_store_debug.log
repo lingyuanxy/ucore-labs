@@ -1,0 +1,14 @@
+The target architecture is set to "riscv:rv64".
+0x0000000000001000 in ?? ()
+Hardware assisted breakpoint 1 at 0xffffffffc0205d1e: file libs/string.c, line 277.
+
+Breakpoint 1, 0xffffffffc0205d1e in memset (s=0xffffffffc020c020 <check_free>, c=c@entry=0 '\000', n=<optimized out>) at libs/string.c:277
+277	        *p ++ = c;
+=== FIRST BSS STORE IN MEMSET ===
+pc=0xffffffffc0205d1e a5=0xffffffffc020c021 a1=0 satp=0x800000000008020b
+=> 0xffffffffc0205d1e <memset+8>:	sb	a1,-1(a5)
+effective_store_va=0xffffffffc020c020
+276	    while (n -- > 0) {
+after_store_pc=0xffffffffc0205d22
+0xffffffffc020c020 <check_free>:	0x00
+[Inferior 1 (process 1) detached]

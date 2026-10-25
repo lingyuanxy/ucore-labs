@@ -1,0 +1,118 @@
+Breakpoint 1 at 0x3954c0: file /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/target/riscv/cpu_helper.c, line 158.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/usr/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7ffff79486c0 (LWP 465)]
+[New Thread 0x7ffff4fff6c0 (LWP 466)]
+
+OpenSBI v0.4 (Jul  2 2019 11:53:53)
+   ____                    _____ ____ _____
+  / __ \                  / ____|  _ \_   _|
+ | |  | |_ __   ___ _ __ | (___ | |_) || |
+ | |  | | '_ \ / _ \ '_ \ \___ \|  _ < | |
+ | |__| | |_) |  __/ | | |____) | |_) || |_
+  \____/| .__/ \___|_| |_|_____/|____/_____|
+        | |
+        |_|
+
+Platform Name          : QEMU Virt Machine
+Platform HART Features : RV64ACDFIMSU
+Platform Max HARTs     : 8
+Current Hart           : 0
+Firmware Base          : 0x80000000
+Firmware Size          : 112 KB
+Runtime SBI Version    : 0.1
+
+PMP0: 0x0000000080000000-0x000000008001ffff (A)
+PMP1: 0x0000000000000000-0xffffffffffffffff (A,R,W,X)
+[Switching to Thread 0x7ffff4fff6c0 (LWP 466)]
+
+Thread 3 "qemu-system-ris" hit Breakpoint 1, get_physical_address (env=env@entry=0x5555563129d0, physical=physical@entry=0x7ffff4ffe7e0, prot=prot@entry=0x7ffff4ffe7dc, addr=addr@entry=2149580800, access_type=access_type@entry=2, mmu_idx=mmu_idx@entry=1) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/target/riscv/cpu_helper.c:158
+158	{
+
+=== S-mode Bare instruction fetch ===
+$1 = 0x80200000
+$2 = 0x0
+$3 = 1
+$4 = 2
+#0  get_physical_address (env=env@entry=0x5555563129d0, physical=physical@entry=0x7ffff4ffe7e0, prot=prot@entry=0x7ffff4ffe7dc, addr=addr@entry=2149580800, access_type=access_type@entry=2, mmu_idx=mmu_idx@entry=1) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/target/riscv/cpu_helper.c:158
+#1  0x00005555558e9d5b in riscv_cpu_tlb_fill (cs=0x555556309fc0, address=2149580800, size=0, access_type=MMU_INST_FETCH, mmu_idx=1, probe=false, retaddr=0) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/target/riscv/cpu_helper.c:451
+#2  0x000055555586a6c4 in tlb_fill (cpu=cpu@entry=0x555556309fc0, addr=addr@entry=2149580800, size=size@entry=0, access_type=access_type@entry=MMU_INST_FETCH, mmu_idx=mmu_idx@entry=1, retaddr=retaddr@entry=0) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/accel/tcg/cputlb.c:878
+#3  0x000055555586dbc1 in get_page_addr_code (env=0x5555563129d0, addr=addr@entry=2149580800) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/include/exec/cpu-all.h:404
+#4  0x0000555555887ba6 in tb_htable_lookup (cpu=cpu@entry=0x555556309fc0, pc=pc@entry=2149580800, cs_base=cs_base@entry=0, flags=flags@entry=24577, cf_mask=4278714368) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/accel/tcg/cpu-exec.c:339
+0x00005555558e9d5b in riscv_cpu_tlb_fill (cs=0x555556309fc0, address=2149580800, size=0, access_type=MMU_INST_FETCH, mmu_idx=1, probe=false, retaddr=0) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/target/riscv/cpu_helper.c:451
+451	    ret = get_physical_address(env, &pa, &prot, address, access_type, mmu_idx);
+Value returned is $5 = 0
+$6 = 0x80200000
+Breakpoint 2 at 0x5555558e94c0: file /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/target/riscv/cpu_helper.c, line 158.
+
+Thread 3 "qemu-system-ris" hit Breakpoint 2, get_physical_address (env=env@entry=0x5555563129d0, physical=physical@entry=0x7ffff4ffe300, prot=prot@entry=0x7ffff4ffe2fc, addr=addr@entry=18446744072637907158, access_type=access_type@entry=2, mmu_idx=mmu_idx@entry=1) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/target/riscv/cpu_helper.c:158
+158	{
+
+=== S-mode Sv39 instruction fetch ===
+$7 = 0xffffffffc02000d6
+$8 = 0x800000000008020b
+$9 = 2
+#0  get_physical_address (env=env@entry=0x5555563129d0, physical=physical@entry=0x7ffff4ffe300, prot=prot@entry=0x7ffff4ffe2fc, addr=addr@entry=18446744072637907158, access_type=access_type@entry=2, mmu_idx=mmu_idx@entry=1) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/target/riscv/cpu_helper.c:158
+#1  0x00005555558e9d5b in riscv_cpu_tlb_fill (cs=0x555556309fc0, address=18446744072637907158, size=0, access_type=MMU_INST_FETCH, mmu_idx=1, probe=false, retaddr=0) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/target/riscv/cpu_helper.c:451
+#2  0x000055555586a6c4 in tlb_fill (cpu=cpu@entry=0x555556309fc0, addr=addr@entry=18446744072637907158, size=size@entry=0, access_type=access_type@entry=MMU_INST_FETCH, mmu_idx=mmu_idx@entry=1, retaddr=retaddr@entry=0) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/accel/tcg/cputlb.c:878
+#3  0x000055555586dbc1 in get_page_addr_code (env=0x5555563129d0, addr=addr@entry=18446744072637907158) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/include/exec/cpu-all.h:404
+#4  0x0000555555887ba6 in tb_htable_lookup (cpu=cpu@entry=0x555556309fc0, pc=pc@entry=18446744072637907158, cs_base=cs_base@entry=0, flags=flags@entry=24577, cf_mask=4278714368) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/accel/tcg/cpu-exec.c:339
+#5  0x0000555555882e18 in tb_lookup__cpu_state (cpu=<optimized out>, pc=<synthetic pointer>, cs_base=<synthetic pointer>, flags=<synthetic pointer>, cf_mask=<optimized out>) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/include/exec/tb-lookup.h:43
+Temporary breakpoint 3 at 0x5555558e9770: file /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/target/riscv/cpu_helper.c, line 254.
+
+Thread 3 "qemu-system-ris" hit Temporary breakpoint 3, get_physical_address (env=env@entry=0x5555563129d0, physical=physical@entry=0x7ffff4ffe300, prot=prot@entry=0x7ffff4ffe2fc, addr=addr@entry=18446744072637907158, access_type=access_type@entry=2, mmu_idx=mmu_idx@entry=1) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/target/riscv/cpu_helper.c:256
+256	        if (!(pte & PTE_V)) {
+
+=== Root PTE read: actual source-level stop ===
+idx = 511
+pte_addr = 2149629944
+pte = 536871119
+ppn = 524288
+mode = 1
+base = 2149625856
+levels = 3
+ptidxbits = 9
+ptesize = <optimized out>
+vm = <optimized out>
+sum = 0
+mxr = <optimized out>
+__func__ = "get_physical_address"
+cs = 0x555556309fc0
+va_bits = 39
+mask = 67108863
+masked_msbs = <optimized out>
+ptshift = 18
+i = 0
+$10 = 0x8020b000
+$11 = 3
+$12 = 0
+$13 = 18
+$14 = 0x1ff
+$15 = 0x8020bff8
+$16 = 0x200000cf
+259	        } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
+265	        } else if ((pte & (PTE_R | PTE_W | PTE_X)) == (PTE_W | PTE_X)) {
+268	        } else if ((pte & PTE_U) && ((mode != PRV_U) &&
+
+=== Finish permission checks and translate ===
+0x00005555558e9d5b in riscv_cpu_tlb_fill (cs=0x555556309fc0, address=18446744072637907158, size=0, access_type=MMU_INST_FETCH, mmu_idx=1, probe=false, retaddr=0) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/target/riscv/cpu_helper.c:451
+451	    ret = get_physical_address(env, &pa, &prot, address, access_type, mmu_idx);
+Value returned is $17 = 0
+$18 = 0x80200000
+Temporary breakpoint 4 at 0x55555586da90: file /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/accel/tcg/cputlb.c, line 846.
+
+Thread 3 "qemu-system-ris" hit Temporary breakpoint 4, tlb_set_page (cpu=cpu@entry=0x555556309fc0, vaddr=vaddr@entry=18446744072637906944, paddr=2149580800, prot=7, mmu_idx=mmu_idx@entry=1, size=size@entry=4096) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/accel/tcg/cputlb.c:846
+846	{
+
+=== TLB insertion ===
+cpu = 0x555556309fc0
+vaddr = 18446744072637906944
+paddr = 2149580800
+prot = 7
+mmu_idx = 1
+size = 4096
+#0  tlb_set_page (cpu=cpu@entry=0x555556309fc0, vaddr=vaddr@entry=18446744072637906944, paddr=2149580800, prot=7, mmu_idx=mmu_idx@entry=1, size=size@entry=4096) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/accel/tcg/cputlb.c:846
+#1  0x00005555558e9ebd in riscv_cpu_tlb_fill (cs=0x555556309fc0, address=18446744072637907158, size=<optimized out>, access_type=MMU_INST_FETCH, mmu_idx=1, probe=<optimized out>, retaddr=0) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/target/riscv/cpu_helper.c:472
+#2  0x000055555586a6c4 in tlb_fill (cpu=cpu@entry=0x555556309fc0, addr=addr@entry=18446744072637907158, size=size@entry=0, access_type=access_type@entry=MMU_INST_FETCH, mmu_idx=mmu_idx@entry=1, retaddr=retaddr@entry=0) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/accel/tcg/cputlb.c:878
+#3  0x000055555586dbc1 in get_page_addr_code (env=0x5555563129d0, addr=addr@entry=18446744072637907158) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/include/exec/cpu-all.h:404
+#4  0x0000555555887ba6 in tb_htable_lookup (cpu=cpu@entry=0x555556309fc0, pc=pc@entry=18446744072637907158, cs_base=cs_base@entry=0, flags=flags@entry=24577, cf_mask=4278714368) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/accel/tcg/cpu-exec.c:339

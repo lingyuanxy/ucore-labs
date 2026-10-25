@@ -1,0 +1,79 @@
+Breakpoint 1 at 0x319b02: file /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/accel/tcg/cputlb.c, line 1030.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/usr/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7ffff79486c0 (LWP 480)]
+[New Thread 0x7ffff4fff6c0 (LWP 481)]
+
+OpenSBI v0.4 (Jul  2 2019 11:53:53)
+   ____                    _____ ____ _____
+  / __ \                  / ____|  _ \_   _|
+ | |  | |_ __   ___ _ __ | (___ | |_) || |
+ | |  | | '_ \ / _ \ '_ \ \___ \|  _ < | |
+ | |__| | |_) |  __/ | | |____) | |_) || |_
+  \____/| .__/ \___|_| |_|_____/|____/_____|
+        | |
+        |_|
+
+Platform Name          : QEMU Virt Machine
+Platform HART Features : RV64ACDFIMSU
+Platform Max HARTs     : 8
+Current Hart           : 0
+Firmware Base          : 0x80000000
+Firmware Size          : 112 KB
+Runtime SBI Version    : 0.1
+
+PMP0: 0x0000000080000000-0x000000008001ffff (A)
+PMP1: 0x0000000000000000-0xffffffffffffffff (A,R,W,X)
+[Switching to Thread 0x7ffff4fff6c0 (LWP 481)]
+
+Thread 3 "qemu-system-ris" hit Breakpoint 1, get_page_addr_code (env=0x5555563129d0, addr=addr@entry=18446744072637907158) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/accel/tcg/cputlb.c:1030
+1030	    if (unlikely(!tlb_hit(entry->addr_code, addr))) {
+
+=== TLB lookup before refill ===
+$1 = 0xffffffffc02000d6
+$2 = 1
+$3 = 0
+$4 = 0xffffffffffffffff
+$5 = 0xffffffffc0200000
+#0  get_page_addr_code (env=0x5555563129d0, addr=addr@entry=18446744072637907158) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/accel/tcg/cputlb.c:1030
+#1  0x0000555555887ba6 in tb_htable_lookup (cpu=cpu@entry=0x555556309fc0, pc=pc@entry=18446744072637907158, cs_base=cs_base@entry=0, flags=flags@entry=24577, cf_mask=4278714368) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/accel/tcg/cpu-exec.c:339
+#2  0x0000555555882e18 in tb_lookup__cpu_state (cpu=<optimized out>, pc=<synthetic pointer>, cs_base=<synthetic pointer>, flags=<synthetic pointer>, cf_mask=<optimized out>) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/include/exec/tb-lookup.h:43
+#3  helper_lookup_tb_ptr (env=0x5555563129d0) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/accel/tcg/tcg-runtime.c:154
+Temporary breakpoint 2 at 0x5555558e9cd0: file /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/target/riscv/cpu_helper.c, line 438.
+
+Thread 3 "qemu-system-ris" hit Temporary breakpoint 2, riscv_cpu_tlb_fill (cs=0x555556309fc0, address=18446744072637907158, size=0, access_type=MMU_INST_FETCH, mmu_idx=1, probe=false, retaddr=0) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/target/riscv/cpu_helper.c:438
+438	{
+
+=== Lookup missed and reached riscv_cpu_tlb_fill ===
+cs = 0x555556309fc0
+address = 18446744072637907158
+size = 0
+access_type = MMU_INST_FETCH
+mmu_idx = 1
+probe = false
+retaddr = 0
+tlb_fill (cpu=cpu@entry=0x555556309fc0, addr=addr@entry=18446744072637907158, size=size@entry=0, access_type=access_type@entry=MMU_INST_FETCH, mmu_idx=mmu_idx@entry=1, retaddr=retaddr@entry=0) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/accel/tcg/cputlb.c:879
+879	    assert(ok);
+Value returned is $6 = true
+get_page_addr_code (env=0x5555563129d0, addr=addr@entry=18446744072637907158) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/accel/tcg/cputlb.c:1033
+1033	            index = tlb_index(env, mmu_idx, addr);
+1034	            entry = tlb_entry(env, mmu_idx, addr);
+1036	        assert(tlb_hit(entry->addr_code, addr));
+
+=== Lookup entry after refill ===
+$7 = 0xffffffffc0200000
+$8 = 0xffffffffc0200000
+Breakpoint 3 at 0x55555586db02: file /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/accel/tcg/cputlb.c, line 1030.
+
+Thread 3 "qemu-system-ris" hit Breakpoint 3, get_page_addr_code (env=0x5555563129d0, addr=addr@entry=18446744072637907158) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/accel/tcg/cputlb.c:1030
+1030	    if (unlikely(!tlb_hit(entry->addr_code, addr))) {
+
+=== Later CPU code lookup on the same virtual page ===
+$9 = 0xffffffffc02000d6
+$10 = 0xffffffffc0200000
+$11 = 0xffffffffc0200000
+1039	    if (unlikely(entry->addr_code & (TLB_RECHECK | TLB_MMIO))) {
+
+=== Hit bypassed refill branch ===
+#0  get_page_addr_code (env=0x5555563129d0, addr=addr@entry=18446744072637907158) at /home/lingyuan/.cache/ucore-qemu/qemu-4.1.1/accel/tcg/cputlb.c:1039
+1039	    if (unlikely(entry->addr_code & (TLB_RECHECK | TLB_MMIO))) {

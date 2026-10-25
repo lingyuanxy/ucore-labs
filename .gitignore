@@ -9,3 +9,13 @@ lab*/.qemu.out
 !.env.example
 *.pem
 *.key
+
+# Partner Lab2 layout and local integration outputs
+lab*/code/bin/
+lab*/code/obj/
+lab2/code/.gdb.in
+lab2/code/.qemu.out
+lab2/build/
+**/__pycache__/
+# Keep the partner's already tracked original evidence; future logs here are evidence too.
+!lab2/report/evidence/*.log
