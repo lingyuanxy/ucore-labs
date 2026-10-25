@@ -53,6 +53,6 @@
 2. `make -C lab2 audit-allocators`：First-Fit 初始化尾插、释放尾插两例确认反向链接损坏；Best-Fit 与 Buddy 的同样两例通过。该命令零退出代表成功复现两处预期缺陷，[JSON](../validation/2026-10-25/allocator-edge-summary.json)明确标为非全通过。
 3. `make -C lab2 verify`：既有三 RAM 启动、三后端专项通过；独立 Best-Fit 评分 20/20，默认 Buddy 原评分 10/20。这个总入口没有包含上述新增缺陷用例，其成功不能覆盖或否定已知缺陷。
 4. `make -C lab2 trace`：本轮重新采集 S Bare/Sv39、页表与真实 TLB miss/refill/hit；环境和 ELF 摘要在 `local-environment.json`。
-5. `make -C lab2 check-preservation`：75 个受保护原文件一致，包括全部 43 个 code 文件、原测试和提示词。仅原主报告和图片目录说明允许更新；新增文件均位于受保护实现之外。
+5. `make -C lab2 check-preservation`：73 个受保护原文件一致，包括全部 43 个 code 文件、原测试和提示词。README、主报告、提示词索引及图片目录说明四份非代码文档允许整理，五份完整提示词原文保持不变；新增文件均位于受保护实现之外。
 
 参考 First-Fit 与桌面 ZIP 逐字相同，缺陷来自课程参考版本。建议在获准修改参考代码后，补上尾插退出或统一哨兵插入；本次不实施。Best-Fit 的源码切换形式及独立报告格式页也继续明确登记，不以分数或报告文字替代缺失的源码操作和未知条款。

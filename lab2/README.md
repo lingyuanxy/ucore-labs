@@ -1,81 +1,42 @@
-# uCore Lab2：物理内存和页表
+# Lab2：物理内存和页表
 
-本分支为 `lab2`，按课程要求在根目录保存 `code/` 和 `report/`。
+- [正式报告](report/report.md)：实现、思考题、Challenge、GDB 和分工表。
+- [任务审查](report/requirements-audit.md)：手册逐项对照与保留问题。
+- [提示词索引](report/prompt.md) · [GDB 实操](report/gdb_test_1.md) · [SLUB 设计](report/slub_design.md)。
+- [验证证据](validation/2026-10-25/README.md)。
 
-- [正式实验报告](report/report.md)
-- [提示词汇总](report/prompt.md)
-- [GDB 题目一实操记录](report/gdb_test_1.md)
-- [SLUB 设计说明](report/slub_design.md)
-- [验证日志及复现说明](report/evidence/README.md)
-- [测试截图目录](report/images/README.md)：真实截图仍待补充。
+## 运行
 
-## 分支与本地工作目录
-
-两个实验共用同一个小组远程仓库，通过 Git worktree 分别打开：
-
-```text
-/home/viewfinder/OS/ucore-lab1/   lab1 分支
-/home/viewfinder/OS/ucore-lab2/   lab2 分支
-```
-
-每个目录内部都是 `code/` 和 `report/`。VS Code 应打开对应实验的整个工作目录；在该目录提交时，只会提交到它所对应的分支，不需要在两个实验之间反复切换分支。
-
-原 `/home/viewfinder/OS/ucore-labs/` 保留为主仓库，位于 `main` 分支。该主仓库及 `.git` 目录需要保留，两个 worktree 共用其中的 Git 数据。
-
-## 编译与运行
-
-在 Lab2 工作目录中：
+在仓库根目录的 WSL 终端执行：
 
 ```bash
-make -C code GCCPREFIX=/home/viewfinder/toolchains/os-freedom-tools/bin/riscv64-unknown-elf-
-make -C code qemu QEMU=/home/viewfinder/qemu-4.1.1/riscv64-softmmu/qemu-system-riscv64
+cd lab2
+make
+make qemu
 ```
 
-使用各自机器的实际工具路径。当前上述 QEMU 路径为真正的 4.1.1；`/opt/qemu-4.1.1/` 中的程序曾核实实际为 7.0.0，不能依据目录名判断版本。
+QEMU 退出：Ctrl+A，松开后按小写 x。也可在根目录使用 `make -C lab2 qemu`。
 
-编译产物 `code/bin/`、`code/obj/` 被忽略。迁移后需要重新构建，让调试信息使用新的源码目录。
+工具路径由个人 `Makefile.local` 提供；其他电脑首次配置可参考 `Makefile.local.example`。VS Code 打开整个仓库并连接 WSL，使用根目录的调试配置。
 
-## 调试
+## 验证与调试
 
-先在一个终端运行：
+以下命令在 `lab2/` 执行：
 
-```bash
-make -C code debug
-```
+| 命令 | 作用 |
+| --- | --- |
+| `make verify` | 三种 RAM 启动、三分配器专项及两种评分 |
+| `make grade` | 独立 Best Fit 调试配置评分，实测 20/20 |
+| `make grade-original` | 原版默认 Buddy 评分，实测 10/20 |
+| `make trace` | 采集页表及 TLB 调试记录 |
+| `make audit-page-init` | 六种初始化输入验证 |
+| `make audit-allocators` | 复现 First Fit 两处已知尾插错误；Best Fit/Buddy 同例通过 |
+| `make check-preservation` | 校验搭档源码和原测试未变 |
 
-在另一个终端运行：
+手动调试时，两个 WSL 终端分别执行 `make debug`、`make gdb`。
 
-```bash
-cd code
-/home/viewfinder/toolchains/os-freedom-tools/bin/riscv64-unknown-elf-gdb \
-  -ex 'file bin/kernel' \
-  -ex 'set arch riscv:rv64' \
-  -ex 'target remote localhost:1234'
-```
+## 当前状态
 
-QEMU 源码调试另用宿主机 GDB；完整过程见题目一记录。两个实验默认都使用 1234 端口，调试时只启动一个实验的 QEMU。
+源码位于 `code/`，与搭档 `lab2` 分支 `1444f66` 的 43 个文件完全一致，默认 Buddy。报告及运行入口更新在 `main`，分工表留空。
 
-VS Code 原有四个任务的路径已指向 `code/`，没有设置新的默认构建任务。F5 调试配置连接已启动的 QEMU，不自动启动模拟器。
-
-## 历史版本
-
-目录调整前的完整版本保存在标签 `lab2-before-layout-20261024`，对应提交 `fbd7876`，其中包含原来的 `lab1/` 和 `lab2/`。
-
-可以只读查看旧 Lab1 报告：
-
-```bash
-git show lab2-before-layout-20261024:lab1/实验报告.md
-```
-
-原实验记录、源文件和截图没有因目录迁移丢失。个人分工、源码学号标记和真实 Lab2 测试截图仍需完成最终核对。
-
-## 提交
-
-远程仓库保持为 `https://github.com/lingyuanxy/ucore-labs`。在本 Lab2 工作目录审查后推送对应分支：
-
-```bash
-git status
-git push -u origin lab2
-```
-
-本次目录整理只创建本地提交和 worktree，不自动推送远程。
+已知边界：Best Fit 独立运行不等于源码选择器切换；原课程 First Fit 存在两处尾插缺陷，保留原码；尚缺独立“实验报告要求”页供格式核对。详情集中在任务审查表。`audit-allocators` 零退出表示预期缺陷复现成功，不能解释为实现没有缺陷。

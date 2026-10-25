@@ -10,16 +10,18 @@ import tempfile
 from pathlib import Path
 from local_tools import ROOT, CODE, EVIDENCE, configuration, make_arguments
 
+EDITABLE_DOCUMENTS = frozenset({
+    "README.md", "report/report.md", "report/prompt.md", "report/images/README.md",
+})
+
 
 def preservation():
     record = json.loads((EVIDENCE / "partner-source-manifest.json").read_text())
-    # Only these non-code documents are updated to resolve the submission notes.
-    # The original 77-file manifest is retained for provenance; every source,
-    # Makefile, linker script and independent test driver remains protected.
-    editable_docs = {"report/report.md", "report/images/README.md"}
+    # The original manifest remains intact. Only documentation may be condensed;
+    # allocator sources, course tests, drivers and five original prompts are frozen.
     protected = 0
     for item in record["files"]:
-        if item["source_path"] in editable_docs:
+        if item["source_path"] in EDITABLE_DOCUMENTS:
             continue
         path = ROOT / item["source_path"]
         actual = hashlib.sha256(path.read_bytes()).hexdigest()
@@ -27,7 +29,7 @@ def preservation():
             raise RuntimeError(f"Partner file changed: {item['source_path']}")
         protected += 1
     print(f"PASS preservation: {protected} protected files (all 43 code files and original test drivers); "
-          f"2 non-code documents may be updated; source {record['source_commit']}", flush=True)
+          f"{len(EDITABLE_DOCUMENTS)} non-code documents may be updated; source {record['source_commit']}", flush=True)
 
 
 def run_log(command, name, cwd=CODE, timeout=45):
@@ -136,7 +138,7 @@ def main():
     result.update({"kernel_boot_ram_mib": [64, 128, 256],
                    "independent_backends": ["buddy", "best_fit", "default"],
                    "partner_code_unchanged": True,
-                   "editable_noncode_documents": ["report/report.md", "report/images/README.md"]})
+                   "editable_noncode_documents": sorted(EDITABLE_DOCUMENTS)})
     (EVIDENCE / "summary.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
 
 

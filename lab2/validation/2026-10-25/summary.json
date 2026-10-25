@@ -21,7 +21,9 @@
   ],
   "partner_code_unchanged": true,
   "editable_noncode_documents": [
-    "report/report.md",
-    "report/images/README.md"
+    "README.md",
+    "report/images/README.md",
+    "report/prompt.md",
+    "report/report.md"
   ]
 }

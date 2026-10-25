@@ -15,7 +15,7 @@
 
 新增 Best Fit 独立验证：course-grade-best-fit.txt 是原评分脚本在该配置下的 20/20；best-fit-grade-boot.txt 为真实启动输出；best-fit-selection.txt/gdb 记录在初始化前选中 Best Fit 并实际进入 init/check。它使用 O0 调试构建，日常 Buddy 仍是原版 O2 构建。
 
-新增 screenshot-provenance.json 保存真实 IDE 截图的来源工作目录、ELF 摘要和原 JPEG 摘要；图片在 report/images。两份允许更新的非代码文档为 report/report.md 与 report/images/README.md，其他原文件仍受 SHA-256 保护。
+新增 screenshot-provenance.json 保存真实 IDE 截图的来源工作目录、ELF 摘要和原 JPEG 摘要；图片在 report/images。README.md、report/report.md、report/prompt.md 和 report/images/README.md 四份非代码文档允许整理，其他 73 个原文件仍受 SHA-256 保护，含五份完整提示词。
 
 ## 本轮依据桌面手册的再审查
 
@@ -25,6 +25,5 @@
 - `allocator-edge-build.txt`、`allocator-edge-tests.txt`、`allocator-edge-summary.json`：参考 First Fit 初始化尾插与释放尾插两例反向链接错误；Best Fit、Buddy 同例通过。审查进程零退出只表示预期缺陷复现成功，JSON 明确记录分配器边界并非全通过。
 - 本轮重新执行 `make verify`、`make trace`，再记录 `local-environment.json`。旧 verify 范围与新缺陷用例分开，不能将旧通过结论扩展到所有边界。
 - `requirements-audit-summary.json`：机器可读的综合结论，明确 `all_requirements_unconditionally_met: false`；完整解释见任务审查表。
-- `original-worktree-run/`：同步报告前，原 VS Code 工作目录已有的未提交运行日志逐字快照及哈希；不覆盖或混写原现场，也不归为本轮重新运行的输出。
 
 `make audit-page-init`、`make audit-allocators` 为新增独立入口；源码与原测试驱动受保护。逐项任务和保留事项见 ../../report/requirements-audit.md。
