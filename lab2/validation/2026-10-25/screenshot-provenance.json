@@ -1,0 +1,11 @@
+{
+  "capture_date": "2026-10-25",
+  "method": "Actual VS Code window capture; original JPEG bytes",
+  "source_worktree": "C:\\Users\\李孟德\\Documents\\Codex\\2026-10-08\\vscode\\outputs\\ucore-labs",
+  "source_code_commit": "1444f662f339e1eac4ef75dd68307ea942ffe702",
+  "source_elf_sha256": "6e0bc3175120777241e34180655443eeaf2f0935bcb2297bd91da0280752f42f",
+  "files": {
+    "01-buddy-breakpoint.jpg": "39248733fa4e986e05a98a9fd2962ca5c10719e3023495dcf2478ef4cd35ae61",
+    "02-slub-breakpoint.jpg": "1cb4d50154821f70ebfcc0095d73375293170609c41736e9978a4332ba6066cd"
+  }
+}

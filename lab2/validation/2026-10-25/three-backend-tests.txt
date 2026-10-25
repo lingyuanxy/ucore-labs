@@ -1,4 +1,4 @@
-$ /opt/qemu-4.1.1/bin/qemu-system-riscv64 -machine virt -m 128 -nographic -bios none -kernel /mnt/c/Users/李孟德/Documents/Codex/2026-10-08/vscode/outputs/ucore-labs/lab2/build/partner-tests/slub-test.elf
+$ /opt/qemu-4.1.1/bin/qemu-system-riscv64 -machine virt -m 128 -nographic -bios none -kernel /mnt/c/Users/李孟德/Documents/ChatGPT/操作系统/lab2/build/partner-tests/slub-test.elf
 PASS pre-init guards; Sv39 supervisor direct mapping active
 TEST backend: buddy_pmm_manager, free pages: 28672
 buddy_check: begin

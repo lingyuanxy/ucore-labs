@@ -1,9 +1,10 @@
-# Lab2 测试截图
+# Lab2 真实调试截图
 
-请将真实测试截图保存在本目录，并在 `../report.md` 中使用相对路径引用，例如：
+- [01-buddy-breakpoint.jpg](01-buddy-breakpoint.jpg)：真实 QEMU 运行到 Buddy 检查入口的 VS Code 调试界面，含源码、调用栈和调试控制台。
+- [02-slub-breakpoint.jpg](02-slub-breakpoint.jpg)：Buddy 检查返回后到达 SLUB 检查入口的真实界面。
 
-```markdown
-![内核启动与分配器检查](images/kernel-pmm-slub.png)
-```
+由 computer-use 的窗口捕获工具采集，保存原始 JPEG，未用日志绘图或 AI 生成截图。本目录截图已在 ../report.md 的第 13.4 节引用。
 
-目前已有真实文本日志和 GDB 实操记录，但尚未上传 Lab2 截图。建议保存完整内核测试、三种 PMM 后端验证和 GDB 地址翻译关键现场。不要用 Lab1 截图替代 Lab2 结果，也不要把日志或生成图片冒充实际截图。
+截图记录的是断点现场，完整测试通过以原始运行日志为依据。IDE 的 Hit breakpoint/暂停原因标签不是内核 panic；O2 下的 optimized out 也按原貌保留。
+
+截图来自原有受信任的 ucore-labs 工作目录，其 code/ 原文件与当前工作目录逐字一致。源码哈希依据见 ../../validation/2026-10-25/partner-source-manifest.json。

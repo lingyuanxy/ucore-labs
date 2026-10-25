@@ -12,7 +12,24 @@
       "miDebuggerServerAddress": "127.0.0.1:1234",
       "stopAtEntry": false,
       "externalConsole": false,
-      "launchCompleteCommand": "None"
+      "launchCompleteCommand": "None",
+      "postRemoteConnectCommands": [
+        {
+          "description": "Break at the real virtual C entry",
+          "text": "-break-insert -h kern_init",
+          "ignoreFailures": false
+        },
+        {
+          "description": "Observe the unchanged Buddy checks",
+          "text": "-break-insert -h buddy_check",
+          "ignoreFailures": false
+        },
+        {
+          "description": "Observe the unchanged SLUB checks",
+          "text": "-break-insert -h slub_check",
+          "ignoreFailures": false
+        }
+      ]
     }
   ]
 }

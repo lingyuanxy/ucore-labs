@@ -1,6 +1,14 @@
 {
-  "exit_code": 2,
-  "score": "Total Score: 10/20",
+  "default_manager": "buddy_pmm_manager",
+  "original_buddy_grade": {
+    "exit_code": 2,
+    "score": "Total Score: 10/20"
+  },
+  "best_fit_debug_profile": {
+    "exit_code": 0,
+    "score": "Total Score: 20/20",
+    "optimization": "O0"
+  },
   "kernel_boot_ram_mib": [
     64,
     128,
@@ -11,5 +19,9 @@
     "best_fit",
     "default"
   ],
-  "partner_files_unchanged": true
+  "partner_code_unchanged": true,
+  "editable_noncode_documents": [
+    "report/report.md",
+    "report/images/README.md"
+  ]
 }

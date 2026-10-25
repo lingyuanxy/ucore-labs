@@ -1,0 +1,31 @@
+0x0000000000001000 in ?? ()
+Hardware assisted breakpoint 1 at 0xffffffffc0205210: file kern/mm/pmm.c, line 40.
+
+Breakpoint 1, init_pmm_manager () at kern/mm/pmm.c:40
+40	    cprintf("memory management: %s\n", pmm_manager->name);
+
+=== Before PMM init: original default ===
+$1 = 0xffffffffc020b6f0 "buddy_pmm_manager"
+
+=== Best Fit validation profile selected before init ===
+$2 = 0xffffffffc020a2c8 "best_fit_pmm_manager"
+Hardware assisted breakpoint 2 at 0xffffffffc0200842: file kern/mm/best_fit_pmm.c, line 15.
+
+Breakpoint 2, best_fit_init () at kern/mm/best_fit_pmm.c:15
+15	    list_init(&free_list);
+
+=== Actual Best Fit init reached ===
+#0  best_fit_init () at kern/mm/best_fit_pmm.c:15
+#1  0xffffffffc0205238 in init_pmm_manager () at kern/mm/pmm.c:41
+#2  0xffffffffc020566c in pmm_init () at kern/mm/pmm.c:129
+Hardware assisted breakpoint 3 at 0xffffffffc02013e0: file kern/mm/best_fit_pmm.c, line 183.
+
+Breakpoint 3, best_fit_check () at kern/mm/best_fit_pmm.c:183
+183	    int score = 0, sumscore = 6;
+
+=== Actual Best Fit allocator check reached ===
+$3 = 0xffffffffc020a2c8 "best_fit_pmm_manager"
+#0  best_fit_check () at kern/mm/best_fit_pmm.c:183
+#1  0xffffffffc0205722 in check_alloc_page () at kern/mm/pmm.c:148
+#2  0xffffffffc0205674 in pmm_init () at kern/mm/pmm.c:136
+[Inferior 1 (process 1) detached]

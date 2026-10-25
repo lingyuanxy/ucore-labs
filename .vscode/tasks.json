@@ -77,7 +77,7 @@
       "problemMatcher": []
     },
     {
-      "label": "uCore: grade lab2",
+      "label": "uCore: grade lab2 Best Fit profile (Buddy default unchanged)",
       "type": "process",
       "command": "make",
       "args": [
@@ -143,6 +143,18 @@
       "command": "python3",
       "args": [
         "support/trace_mmu.py"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/lab2"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "uCore: grade lab2 original Buddy configuration",
+      "type": "process",
+      "command": "make",
+      "args": [
+        "grade-original"
       ],
       "options": {
         "cwd": "${workspaceFolder}/lab2"
