@@ -87,5 +87,10 @@
       "article_characters": 2418
     }
   ],
-  "missing_standalone_page": "实验报告要求"
+  "missing_standalone_page": "实验报告要求",
+  "report_template": {
+    "path": "lab1/实验报告模板.md",
+    "sha256": "e0e86ce8ef60a54d2ac59cbe151caa8a88fae5d58b6d504ca1bee46cf6ea1fc3",
+    "basis": "User explicitly requests the same template as Lab1"
+  }
 }

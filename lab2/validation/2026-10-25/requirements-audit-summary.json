@@ -21,9 +21,10 @@
   "gdb_trace": "S-mode Bare/Sv39; root PTE; TLB miss/refill/later hit; guest steps",
   "open_items": [
     "Best-Fit source-selector switch form not demonstrated in preserved current source",
-    "Reference First-Fit tail-insertion defects retained under source-preservation constraint",
-    "Standalone report-format requirements HTML unavailable; YOUR CODE markers retained"
+    "Reference First-Fit tail-insertion defects retained under source-preservation constraint"
   ],
   "group_division": "blank as requested",
-  "report": "../../report/requirements-audit.md"
+  "report": "../../report/requirements-audit.md",
+  "report_template": "lab1/实验报告模板.md",
+  "template_structure_applied": true
 }

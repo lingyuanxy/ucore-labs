@@ -19,7 +19,7 @@
 
 ## 本轮依据桌面手册的再审查
 
-- `manual-source-manifest.json`：本次读取的 14 份 HTML 的文件名、原保存 URL 与 SHA-256；缺少单独“实验报告要求”正文。
+- `manual-source-manifest.json`：本次读取的 14 份 HTML 的文件名、原保存 URL 与 SHA-256；报告模板另外按用户指定复用 lab1/实验报告模板.md。
 - `course-source-comparison.json`：First Fit 与桌面课程 ZIP 逐字一致；Best Fit 的两个课程测试统一换行后函数文本完全一致。
 - `page-init-*.gdb/txt`、`page-init-summary.json`：在真实默认内核上注入六种解析后 RAM 信息，错误拒绝和成功布局均达到预期；不是对 DTB 解析器本身的畸形字节流测试。
 - `allocator-edge-build.txt`、`allocator-edge-tests.txt`、`allocator-edge-summary.json`：参考 First Fit 初始化尾插与释放尾插两例反向链接错误；Best Fit、Buddy 同例通过。审查进程零退出只表示预期缺陷复现成功，JSON 明确记录分配器边界并非全通过。
@@ -27,3 +27,5 @@
 - `requirements-audit-summary.json`：机器可读的综合结论，明确 `all_requirements_unconditionally_met: false`；完整解释见任务审查表。
 
 `make audit-page-init`、`make audit-allocators` 为新增独立入口；源码与原测试驱动受保护。逐项任务和保留事项见 ../../report/requirements-audit.md。
+
+报告已按实验一模板重排为基本信息和六个主体部分；真实运行及评分截图见 ../../report/images/03-qemu-run.jpg、04-grade-result.jpg，评分只保留一张截图。
