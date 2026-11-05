@@ -5,6 +5,7 @@
 #include <kdebug.h>
 #include <kmonitor.h>
 #include <pmm.h>
+#include <slub.h>
 #include <stdio.h>
 #include <string.h>
 #include <trap.h>
@@ -29,6 +30,8 @@ int kern_init(void) {
     idt_init();  // init interrupt descriptor table
 
     pmm_init();  // init physical memory management
+    slub_init();
+    slub_check();
 
     idt_init();  // init interrupt descriptor table
 

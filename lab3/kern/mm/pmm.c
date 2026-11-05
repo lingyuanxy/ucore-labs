@@ -1,5 +1,6 @@
 #include <default_pmm.h>
 #include <best_fit_pmm.h>
+#include <buddy_pmm.h>
 #include <defs.h>
 #include <error.h>
 #include <memlayout.h>
@@ -35,7 +36,7 @@ static void check_alloc_page(void);
 
 // init_pmm_manager - initialize a pmm_manager instance
 static void init_pmm_manager(void) {
-    pmm_manager = &default_pmm_manager;
+    pmm_manager = &buddy_pmm_manager;
     cprintf("memory management: %s\n", pmm_manager->name);
     pmm_manager->init();
 }
@@ -81,7 +82,60 @@ size_t nr_free_pages(void) {
     return ret;
 }
 
-//lab2 请补充你在lab2中的代码
+//lab2 2413170: migrate page_init from our Lab2 implementation.
+static void page_init(void) {
+    // detect physical memory space, reserve already used memory,
+    // then use pmm->init_memmap to create free page list
+    uint64_t mem_base = get_memory_base();
+    uint64_t mem_size = get_memory_size();
+    uint64_t mem_end = mem_base + mem_size;
+    cprintf("Original physical memory: base = 0x%016lx, size = 0x%016lx, end = 0x%016lx\n", mem_base, mem_size, mem_end);
+    if(mem_base > KERNEL_BEGIN_PADDR) {
+        panic("invalid memory base");
+    }
+    if(mem_base < DRAM_BASE) {
+        mem_base = DRAM_BASE;
+    }
+    if(mem_end > PHYSICAL_MEMORY_END) {
+        mem_end = PHYSICAL_MEMORY_END;
+    }
+    mem_size = mem_end - mem_base;
+    if(mem_size == 0 || mem_end <= mem_base) {
+        panic("invalid memory size");
+    }
+
+    cprintf("Available physical memory: base = 0x%016lx, size = 0x%016lx, end = 0x%016lx\n", mem_base, mem_size, mem_end);
+    va_pa_offset = KERNBASE - KERNEL_BEGIN_PADDR;
+    npage = mem_end / PGSIZE;
+
+    size_t page_num = npage - nbase;
+    uint64_t page_array_size = ROUNDUP(page_num * sizeof(struct Page),PGSIZE);
+
+    extern char end[];   //链接脚本，为虚拟地址
+
+    pages = (struct Page *)ROUNDUP((uintptr_t)end, PGSIZE);
+
+    uintptr_t desc_end = (uintptr_t)pages + page_array_size;
+    uintptr_t free_start = PADDR(ROUNDUP(desc_end, PGSIZE));   //虚拟地址转换为物理地址
+
+    uintptr_t free_end = ROUNDDOWN(mem_end, PGSIZE);
+
+    cprintf("Free physical memory: start = 0x%016lx, end = 0x%016lx, size = 0x%016lx\n", free_start, free_end, free_end - free_start);
+
+    if(free_start >= free_end) {
+        panic("no free memory available");
+    }
+
+    for(size_t i = 0 ; i < page_num; i++){
+        pages[i].flags = 0;
+        pages[i].property =0;
+        set_page_ref(&pages[i], 0);
+        list_init(&(pages[i].page_link));
+        SetPageReserved(&pages[i]);
+    }
+
+    init_memmap(pa2page(free_start),(free_end - free_start) / PGSIZE);
+}
 
 /* pmm_init - initialize the physical memory management */
 void pmm_init(void) {

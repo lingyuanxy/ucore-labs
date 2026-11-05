@@ -1,0 +1,61 @@
+{
+  "date": "2026-11-05",
+  "source_repository_commit": "3e1c6f2067e5f3d01505ef338ccd954467896b6c",
+  "source_directory": "lab2/code",
+  "compiler": "riscv64-unknown-elf-gcc 15.1.0",
+  "qemu": "4.1.1",
+  "mode": "memory-only temporary copy; Trap entry/initialization excluded",
+  "cases": [
+    {
+      "allocator": "Buddy",
+      "ram_mib": 64,
+      "pmm_selfcheck": "pass",
+      "slub_selfcheck": "pass",
+      "shutdown_exit_code": 0
+    },
+    {
+      "allocator": "Buddy",
+      "ram_mib": 128,
+      "pmm_selfcheck": "pass",
+      "slub_selfcheck": "pass",
+      "shutdown_exit_code": 0
+    },
+    {
+      "allocator": "Buddy",
+      "ram_mib": 256,
+      "pmm_selfcheck": "pass",
+      "slub_selfcheck": "pass",
+      "shutdown_exit_code": 0
+    },
+    {
+      "allocator": "Best Fit",
+      "ram_mib": 128,
+      "pmm_selfcheck": "pass",
+      "slub_selfcheck": "pass",
+      "shutdown_exit_code": 0
+    }
+  ],
+  "full_lab3_build": "not passing: missing interrupt_handler/exception_handler and legacy sbadaddr CSR name",
+  "protected_files_sha256": {
+    "kern/trap/trap.c": "271996f745322e5982db14a502a1bbe4ff573463bcad4dab47eed130ea6e7e82",
+    "kern/trap/trapentry.S": "6a862c584327756ea3383a3f187a79d690795ed9b8db10e171f2dd89d2920987",
+    "tools/boot.ld": "d42ba7abd94e9bd67879fe6d25165a39b829594d9fe74cadedce359bf4fe2474",
+    "tools/function.mk": "9ad77549eddd0e758d25c6ae79ad70aec6a374526548eee0bbbb2f4586bdf8c6",
+    "tools/gdbinit": "a0825abc90b386b28e27268558f5be6c66ec8c35a54ab83b538ad0cb7154262e",
+    "tools/grade.sh": "52a21695266a525bccdcf5bbff4867288f70bfae2b4bd37c47ab2e3369893140",
+    "tools/inject.py": "4414aee51635d2eefca977f9e3485f3e01dd4f0d8ddb23244a89b8956b347d68",
+    "tools/kernel.ld": "171b96007b1c3f4a7ecef522c97797ab5f8740e9bc45d578f95e1559876d2cef",
+    "tools/kernel_nopage.ld": "d373a560bac53e0ed56756e68ecb01ed222bf08674f5033e022e72c2896320bc",
+    "tools/sign.c": "e0224260adec04f09820909279c9c60299220778f27355113cab862f0a370544",
+    "tools/test_lab3.c": "56dd62f1729f25c96e94870f282ac1b2e942888928a6d2d035df8ae228190ac3",
+    "tools/test_lab3.h": "4a74a88b03557c10633484664ec1d37be87e485f281dacf88eb583e647a7c96b",
+    "tools/test_lab3_context.S": "213507617e6e9b2be5ae5c39a53534f9d25dfb60908e13d2fc917a4c82dcd4d7",
+    "tools/vector.c": "0dca823bd9922bfb98b64dce4b6f157ec881b62c545f152c0e5ec1dbd86e26dc"
+  },
+  "copied_files_sha256": {
+    "buddy_pmm.c": "5799d6212d1b84047cf7e91a92b4ad126f122cea752224a30710cdc0563e7756",
+    "buddy_pmm.h": "817eeab54c27fc759dc8271f38bd3e0779a0e46d76d8e1727e05238a1bd1760d",
+    "slub.c": "2775082038c59a352d170c205f7e84fc6d07743bb772129e1b28100c85eb0b14",
+    "slub.h": "fd517efc0107e5a2fe65ef1f42c5d6a23edf9b5e068cf5d0c9d63e100d6df625"
+  }
+}
