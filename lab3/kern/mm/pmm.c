@@ -35,9 +35,7 @@ static void check_alloc_page(void);
 
 // init_pmm_manager - initialize a pmm_manager instance
 static void init_pmm_manager(void) {
-    // // pmm_manager = &default_pmm_manager;
-    pmm_manager = &best_fit__pmm_manager;
-    pmm_manager = &best_fit_pmm_manager;
+    pmm_manager = &default_pmm_manager;
     cprintf("memory management: %s\n", pmm_manager->name);
     pmm_manager->init();
 }
@@ -83,43 +81,7 @@ size_t nr_free_pages(void) {
     return ret;
 }
 
-static void page_init(void) {
-    va_pa_offset = PHYSICAL_MEMORY_OFFSET;
-
-    uint64_t mem_begin = get_memory_base();
-    uint64_t mem_size  = get_memory_size();
-    if (mem_size == 0) {
-        panic("DTB memory info not available");
-    }
-    uint64_t mem_end   = mem_begin + mem_size;
-
-    cprintf("physcial memory map:\n");
-    cprintf("  memory: 0x%016lx, [0x%016lx, 0x%016lx].\n", mem_size, mem_begin,
-            mem_end - 1);
-
-    uint64_t maxpa = mem_end;
-
-    if (maxpa > KERNTOP) {
-        maxpa = KERNTOP;
-    }
-
-    extern char end[];
-
-    npage = maxpa / PGSIZE;
-    pages = (struct Page *)ROUNDUP((void *)end, PGSIZE);
-
-    for (size_t i = 0; i < npage - nbase; i++) {
-        SetPageReserved(pages + i);
-    }
-
-    uintptr_t freemem = PADDR((uintptr_t)pages + sizeof(struct Page) * (npage - nbase));
-
-    mem_begin = ROUNDUP(freemem, PGSIZE);
-    mem_end = ROUNDDOWN(mem_end, PGSIZE);
-    if (freemem < mem_end) {
-        init_memmap(pa2page(mem_begin), (mem_end - mem_begin) / PGSIZE);
-    }
-}
+//lab2 请补充你在lab2中的代码
 
 /* pmm_init - initialize the physical memory management */
 void pmm_init(void) {

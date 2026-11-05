@@ -4,7 +4,6 @@
 #include <defs.h>
 
 extern volatile size_t ticks;
-extern volatile size_t prints;
 
 void clock_init(void);
 void clock_set_next_event(void);
