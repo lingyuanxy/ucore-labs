@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-06",
+  "compiler": "RISC-V GCC 15.1.0",
+  "qemu": "4.1.1",
+  "grade": {
+    "context": 35,
+    "illegal": 25,
+    "timer": 40,
+    "total": 100
+  },
+  "normal_run": {
+    "exit_code": 0,
+    "tick_lines": 10,
+    "shutdown": "SBI"
+  },
+  "initial_attempt": {
+    "score": 60,
+    "reason": "Timer PASS printed ticks=201; unchanged grader requires ticks=200"
+  },
+  "resolution": "Re-arm timer after counting and console output; original test and grader unchanged",
+  "source_sha256": {
+    "lab3/kern/trap/trap.c": "d708ed7dab3685ad5adb42844b06d6525d3a957c87e60df9e89810e3431e9faf",
+    "lab3/kern/trap/trapentry.S": "c05df6b25ec606f68c64854d04ec58d96903dc2b57419ecc1dc62164a8250ad3"
+  },
+  "unchanged_tools_sha256": {
+    "lab3\\tools\\boot.ld": "d42ba7abd94e9bd67879fe6d25165a39b829594d9fe74cadedce359bf4fe2474",
+    "lab3\\tools\\function.mk": "9ad77549eddd0e758d25c6ae79ad70aec6a374526548eee0bbbb2f4586bdf8c6",
+    "lab3\\tools\\gdbinit": "a0825abc90b386b28e27268558f5be6c66ec8c35a54ab83b538ad0cb7154262e",
+    "lab3\\tools\\grade.sh": "52a21695266a525bccdcf5bbff4867288f70bfae2b4bd37c47ab2e3369893140",
+    "lab3\\tools\\inject.py": "4414aee51635d2eefca977f9e3485f3e01dd4f0d8ddb23244a89b8956b347d68",
+    "lab3\\tools\\kernel.ld": "171b96007b1c3f4a7ecef522c97797ab5f8740e9bc45d578f95e1559876d2cef",
+    "lab3\\tools\\kernel_nopage.ld": "d373a560bac53e0ed56756e68ecb01ed222bf08674f5033e022e72c2896320bc",
+    "lab3\\tools\\sign.c": "e0224260adec04f09820909279c9c60299220778f27355113cab862f0a370544",
+    "lab3\\tools\\test_lab3.c": "56dd62f1729f25c96e94870f282ac1b2e942888928a6d2d035df8ae228190ac3",
+    "lab3\\tools\\test_lab3.h": "4a74a88b03557c10633484664ec1d37be87e485f281dacf88eb583e647a7c96b",
+    "lab3\\tools\\test_lab3_context.S": "213507617e6e9b2be5ae5c39a53534f9d25dfb60908e13d2fc917a4c82dcd4d7",
+    "lab3\\tools\\vector.c": "0dca823bd9922bfb98b64dce4b6f157ec881b62c545f152c0e5ec1dbd86e26dc"
+  }
+}

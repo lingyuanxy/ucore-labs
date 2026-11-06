@@ -1,4 +1,4 @@
-# Lab3：已完成 Lab2 迁移，Trap 待实现
+# Lab3：Lab2 内存迁移与 Trap 实现
 
 基于桌面 `lab3.zip` 的 2026 年课程框架，迁移来源为本仓库自己的 `lab2/code/`。未使用此前误导入的他人实现。
 
@@ -26,18 +26,22 @@ Lab2 原目录未修改。文档、旧评分脚本和个人工具链配置没有
 
 验证副本位于本地未提交的 `tmp/lab3-migration-smoke/`：仅在副本中去掉 Trap 源目录的构建、`idt_init/clock_init/intr_enable` 调用，并为调试监视器提供 `print_trapframe` 占位函数，运行内存自检后打印 `LAB2_MIGRATION_BOOT_PASS` 并调用 SBI 关机。Best Fit 用例仅在该副本中切换 PMM。它验证内存迁移，**不验证 Trap、中断返回或 Lab3 评分**。
 
-## 接下来需要完成
+## Trap 实现（2026-11-06）
 
-`kern/trap/trapentry.S` 的 `RESTORE_ALL`、`__alltraps`，以及 `kern/trap/trap.c` 的 `interrupt_handler()`、`exception_handler()` 均保留原始待填位置；`tools/` 文件也保持课程原样，SHA-256 记录在验证摘要中。
+- `RESTORE_ALL` 按现有 Trap frame 偏移恢复 `sstatus`、`sepc` 与通用寄存器，最后恢复原 `sp`。
+- `__alltraps` 通过 `a0` 将 Trap frame 指针传给 `trap()`，返回后进入 `__trapret`。
+- `interrupt_handler()` 分类处理中断，时钟每 100 次打印一次，打印 10 次后通过 SBI 关机。下一次定时事件在计数和打印结束后重新设置，避免串口打印期间下一次截止时间已到而返回后立即再次触发。
+- `exception_handler()` 处理非法指令与断点，识别 16/32 位编码长度并推进 `epc`，其他异常输出 Trap frame；对不支持的更长编码输出现场并 panic。取指逻辑针对本实验可读取的内核代码区，不提供通用用户地址安全取指。
+- 将 `SAVE_ALL` 的旧 CSR 名 `sbadaddr` 改为 `stval`，保存位置与结构体布局不变。
+- 课程 `tools/` 测试和评分脚本保持原样，没有更改匹配规则或分值。
 
-完整 Lab3 目前不能构建：除了未实现的两个 handler，GCC 15.1.0 配套汇编器还不识别框架中的旧 CSR 名 `sbadaddr`，后续实现时需按当前架构接口检查并改为 `stval` 等相应兼容处理。这些问题未在本次 Lab2 迁移中填补。
-
-在仓库根目录的 WSL 终端，可单独复核内存文件编译：
+构建和验证在仓库根目录的 WSL 终端执行，工具路径按本机安装位置调整：
 
 ```bash
-make -C lab3 GCCPREFIX=/home/lingyuan/riscv-elf-toolchains/bin/riscv64-unknown-elf- \
-  obj/kern/mm/pmm.o obj/kern/mm/default_pmm.o \
-  obj/kern/mm/best_fit_pmm.o obj/kern/mm/buddy_pmm.o obj/kern/mm/slub.o
+export PATH="/home/lingyuan/riscv-elf-toolchains/bin:/opt/qemu-4.1.1/bin:$PATH"
+make -C lab3
+make -C lab3 qemu
+make -C lab3 grade
 ```
 
-工具链路径按本机实际安装位置调整。Lab3 整体编译、`make grade` 和时钟/异常验证需待 Trap 功能完成后再执行。
+本次通过课程注入器和 `tools/grade.sh` 在隔离的源码副本中执行评分，等价于 `make grade` 的注入及评分步骤；没有把注入代码写入正式源码。运行证据和初次时序问题记录见 [Trap 验证记录](validation/trap/README.md)。实验报告仍需另行整理 spec、prompt、原理分析与排错过程。

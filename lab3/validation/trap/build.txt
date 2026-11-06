@@ -1,0 +1,5 @@
+make: Entering directory '/mnt/c/Users/李孟德/Documents/ChatGPT/操作系统/lab3'
++ cc kern/trap/trap.c
++ ld bin/kernel
+/home/lingyuan/riscv-elf-toolchains/bin/riscv64-unknown-elf-objcopy bin/kernel --strip-all -O binary bin/ucore.img
+make: Leaving directory '/mnt/c/Users/李孟德/Documents/ChatGPT/操作系统/lab3'
