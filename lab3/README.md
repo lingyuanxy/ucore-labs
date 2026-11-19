@@ -44,4 +44,4 @@ make -C lab3 qemu
 make -C lab3 grade
 ```
 
-本次通过课程注入器和 `tools/grade.sh` 在隔离的源码副本中执行评分，等价于 `make grade` 的注入及评分步骤；没有把注入代码写入正式源码。运行证据和初次时序问题记录见 [Trap 验证记录](validation/trap/README.md)。实验报告仍需另行整理 spec、prompt、原理分析与排错过程。
+本次通过课程注入器和 `tools/grade.sh` 在隔离的源码副本中执行评分，等价于 `make grade` 的注入及评分步骤；没有把注入代码写入正式源码。运行证据和初次时序问题记录见 [Trap 验证记录](validation/trap/README.md)。按 Lab1 模板整理的 [实验报告](实验报告.md) 已补齐 spec、prompt、模块分析、排错过程和验证证据。

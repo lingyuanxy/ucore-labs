@@ -6,7 +6,7 @@
 | --- | --- |
 | Lab1 | [实验报告](lab1/实验报告.md) |
 | Lab2 | [运行说明](lab2/README.md) · [实验报告](lab2/实验报告.md) |
-| Lab3 | [迁移与运行状态](lab3/README.md)（Lab2 已迁入，Trap 已实现） |
+| Lab3 | [运行说明](lab3/README.md) · [实验报告](lab3/实验报告.md) |
 
 在仓库根目录的 WSL 终端执行：
 

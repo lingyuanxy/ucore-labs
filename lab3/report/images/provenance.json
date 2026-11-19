@@ -1,0 +1,19 @@
+{
+  "captured_on": "2026-11-19",
+  "execution_record_date": "2026-11-06",
+  "method": "Unedited Edge window screenshots while viewing immutable raw GitHub log files; not live terminal reruns",
+  "items": [
+    {
+      "image": "normal-log.png",
+      "source_url": "https://raw.githubusercontent.com/lingyuanxy/ucore-labs/38456b4/lab3/validation/trap/normal.txt",
+      "source_sha256": "dc73cf372364724d2d405d5838979d423ddfcab4c8573e789c22afa4e64325c2",
+      "image_sha256": "dc68b7e0e68ed45ae3b8e3deff127d46fddb52328be53cdbdb1b9e18eb00724d"
+    },
+    {
+      "image": "grade-log.png",
+      "source_url": "https://raw.githubusercontent.com/lingyuanxy/ucore-labs/38456b4/lab3/validation/trap/grade.txt",
+      "source_sha256": "b71adeadb1a9e19346eed0ab2e0918ad572a97a0904f1ddd1acaf05f89d9f589",
+      "image_sha256": "a6924051c6b068131cc85f77681d9d07bcfe46e82f7f323dcb24bd6a113d5da7"
+    }
+  ]
+}
